@@ -23,7 +23,6 @@ public void QuitButton()
 
     public void MenuButton()
     {
-        Debug.Log("a");
         SceneManager.LoadScene("Menu");
     }
 }
