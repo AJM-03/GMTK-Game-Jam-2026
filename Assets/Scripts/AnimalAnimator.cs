@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class AnimalAnimator : MonoBehaviour
 {
     private Animator animator;
+    private Animal animal;
+
+    private Vector3 prevPosition;
 
     public enum Anim
     {
@@ -57,9 +60,20 @@ public class AnimalAnimator : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        animal = GetComponent<Animal>();
 
-        ChangeAnimation(Anim.Idle_A);
+        ChangeAnimation(animal.idleAnimation);
         ChangeShapekey(Emotion.Eyes_Blink);  // Start by blinking
+    }
+
+    private void Update()
+    {
+        if (Vector3.Distance(transform.position, prevPosition) > 0.005f)
+            ChangeAnimation(animal.walkingAnimation);
+        else
+            ChangeAnimation(animal.idleAnimation);
+
+        prevPosition = transform.position;
     }
 
 

@@ -6,6 +6,8 @@ public class Animal : MonoBehaviour
 {
     [Header("Animal Info")]
     [SerializeField] float walkSpeed;  // How quickly it moves
+    public AnimalAnimator.Anim walkingAnimation = AnimalAnimator.Anim.Walk;
+    public AnimalAnimator.Anim idleAnimation = AnimalAnimator.Anim.Idle_A;
     [SerializeField] float spacing;  // How far other animals should be from it
 
 
@@ -35,5 +37,14 @@ public class Animal : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, controller.animals[i].transform.position, -walkSpeed * Time.deltaTime);
             }
         }
+
+        if (Vector3.Distance(transform.position, controller.moveTowardsLocation.position) > spacing * 3)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, controller.moveTowardsLocation.position, walkSpeed * Time.deltaTime);
+        }
+        else
+            transform.position = Vector3.MoveTowards(transform.position, controller.moveTowardsLocation.position, -walkSpeed * Time.deltaTime);
+
+        transform.LookAt(controller.moveTowardsLocation);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     [SerializeField] float startingTime;
-    [SerializeField] Transform moveTowardsLocation;
+    public Transform moveTowardsLocation;
     [SerializeField] Transform teleportLocation;
     [SerializeField] List<GameObject> animalPrefabs = new List<GameObject>();
 
