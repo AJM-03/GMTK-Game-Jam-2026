@@ -22,6 +22,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     private bool movingIn;
     [HideInInspector] public bool paired;
     [HideInInspector] public bool walkFowards;
+    [SerializeField] PhysicMaterial physicMaterial;
 
 
     private GameController controller;
@@ -33,6 +34,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
         controller = c;
         rb = GetComponent<Rigidbody>();
         movingIn = Random.Range(0, 3) == 0;
+        SetupCollider();
     }
 
     
@@ -81,22 +83,22 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
 
     private bool CastMovement(Vector3 dir)
     {
-        CapsuleCollider capsuleCol = GetComponent<CapsuleCollider>();
-        if (capsuleCol == null)
+        MeshCollider meshCol = GetComponentInChildren<MeshCollider>();
+        if (meshCol == null)
         {
-            Debug.LogWarning("No SphereCollider found on this GameObject.");
+            Debug.LogWarning("No Collider found on this GameObject.");
             return false;
         }
 
         //  Calculate world-space radius (SphereCollider radius * largest scale axis)
-        float worldRadius = capsuleCol.radius * Mathf.Max(
+        float worldRadius = spacing * Mathf.Max(
             transform.lossyScale.x,
             transform.lossyScale.y,
             transform.lossyScale.z
         );
 
         //  Start position of the sphere cast
-        Vector3 origin = transform.position + transform.rotation * capsuleCol.center;
+        Vector3 origin = transform.position;
 
         //  Direction for the sphere cast (example: forward)
         Vector3 direction = dir;
@@ -120,15 +122,51 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     public void OnPointerDown(PointerEventData eventData) { controller.SelectAnimal(this); }
 
 
-    private void OnDrawGizmos()
+    //private void OnDrawGizmos()
+    //{
+    //    Vector3 origin = transform.position + transform.rotation * GetComponent<MeshCollider>().center;
+    //    float worldRadius = GetComponent<CapsuleCollider>().radius * Mathf.Max(
+    //        transform.lossyScale.x,
+    //        transform.lossyScale.y,
+    //        transform.lossyScale.z
+    //    );
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(origin, worldRadius);
+    //}
+
+    private void SetupCollider()
     {
-        Vector3 origin = transform.position + transform.rotation * GetComponent<CapsuleCollider>().center;
-        float worldRadius = GetComponent<CapsuleCollider>().radius * Mathf.Max(
-            transform.lossyScale.x,
-            transform.lossyScale.y,
-            transform.lossyScale.z
-        );
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(origin, worldRadius);
+        // Try to get the LODGroup component from this GameObject
+        LODGroup lodGroup = GetComponent<LODGroup>();
+        if (lodGroup == null) return;
+        lodGroup.enabled = true;
+
+        // Get all LOD levels
+        LOD[] lods = lodGroup.GetLODs();
+
+        // The last LOD is the lowest detail
+        LOD lowestLOD = lods[lods.Length - 1];
+
+        // Loop through all renderers in the lowest LOD
+        foreach (Renderer renderer in lowestLOD.renderers)
+        {
+            if (renderer is SkinnedMeshRenderer skinnedRenderer)
+            {
+                if (skinnedRenderer.sharedMesh != null)
+                {
+                    //Debug.Log($"Lowest LOD Skinned Mesh: {skinnedRenderer.sharedMesh.name}");
+
+                    MeshCollider collider = skinnedRenderer.gameObject.AddComponent<MeshCollider>();
+                    collider.convex = true;
+                    collider.providesContacts = true;
+                    collider.sharedMaterial = physicMaterial;
+                    collider.sharedMesh = skinnedRenderer.sharedMesh; // Triggers automatic baking
+                    skinnedRenderer.transform.localRotation = Quaternion.Euler(new Vector3(-90, 0, 0));
+                    return;
+                }
+            }
+        }
+
+        Debug.LogError("Mesh not found for collider in " + animalName);
     }
 }
