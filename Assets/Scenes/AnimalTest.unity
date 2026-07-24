@@ -700,6 +700,7 @@ MonoBehaviour:
   - {fileID: 1596105782269738635, guid: 957e3954319f9ee48a7de6c945f1b38d, type: 3}
   - {fileID: 3379648028002073259, guid: 227d2d1c7406e364cba1433471a7ace4, type: 3}
   - {fileID: 7680485587966895680, guid: a3fb6d863010ebe42888cae910d84f0d, type: 3}
+  - {fileID: 1189406532759751976, guid: 58e9d2ad4e513a4428985b33759b1c66, type: 3}
   barrierLayer:
     serializedVersion: 2
     m_Bits: 64
