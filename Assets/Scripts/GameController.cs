@@ -72,7 +72,7 @@ public class GameController : MonoBehaviour
 
     public void SelectAnimal(Animal a)
     {
-        if (a != highlightedAnimal || !canSelect) return;
+        if (a == selectedAnimal || a != highlightedAnimal || !canSelect) return;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
         poofParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
         poofParticles.Play();
@@ -92,14 +92,12 @@ public class GameController : MonoBehaviour
     {
         if (highlightedAnimal != a) highlightedAnimal = a;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Clicked);
-
     }
 
     public void MouseExit(Animal a)
     {
         if (highlightedAnimal == a) highlightedAnimal = null;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Idle_A);
-
     }
 
     private bool PairAnimals(Animal a, Animal b)
@@ -120,6 +118,7 @@ public class GameController : MonoBehaviour
     {
         canSelect = false;
         yield return new WaitForSeconds(0.5f);
+        canSelect = true;
 
         a.gameObject.SetActive(false);
         puffParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
@@ -136,7 +135,6 @@ public class GameController : MonoBehaviour
         b.GetComponent<CapsuleCollider>().excludeLayers = barrierLayer;
 
         yield return new WaitForSeconds(0.3f);
-        canSelect = true;
 
         a.gameObject.SetActive(true);
         a.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);

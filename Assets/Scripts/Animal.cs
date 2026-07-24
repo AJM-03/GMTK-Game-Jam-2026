@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -33,7 +32,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     {
         controller = c;
         rb = GetComponent<Rigidbody>();
-        movingIn = Random.Range(0, 2) == 1;
+        movingIn = Random.Range(0, 3) == 0;
     }
 
     

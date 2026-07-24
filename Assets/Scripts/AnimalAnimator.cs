@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,8 +9,10 @@ public class AnimalAnimator : MonoBehaviour
 {
     private Animator animator;
     private Animal animal;
-
-    private Vector3 prevPosition;
+    private bool playingOneShot;
+    private Coroutine killCo, fadeCo;
+    private float crossfadeLength;
+    private string fadingTo;
 
     public enum Anim
     {
@@ -21,7 +25,8 @@ public class AnimalAnimator : MonoBehaviour
         Fly,
         Hit,
         Idle_A, 
-        Idle_B, Idle_C,
+        Idle_B, 
+        Idle_C,
         Jump,
         Roll,
         Lay,
@@ -68,36 +73,37 @@ public class AnimalAnimator : MonoBehaviour
 
     private void Update()
     {
-        if (IsAnimationPlaying(Anim.Spin.ToString())) return;
-        if (IsAnimationPlaying(Anim.Clicked.ToString())) return;
         if (GetComponent<Rigidbody>().velocity.magnitude > .5f)
             ChangeAnimation(animal.walkingAnimation);
         else
             ChangeAnimation(animal.idleAnimation);
-
-        //prevPosition = transform.position;
     }
 
 
     public void ChangeAnimation(Anim a)
     {
-        // If Spin/Splash animation
-        if ((int)a == 16)
+
+        if (a == Anim.Spin)  // If Spin/Splash animation
         {
             if (animator.HasState(0, Animator.StringToHash("Spin")))
             {
-                animator.Play("Spin");
-                // dropdownAnimation.options[index] = new Dropdown.OptionData("Spin");
+                StartCoroutine(PlayOneShot("Spin"));
             }
             else if (animator.HasState(0, Animator.StringToHash("Splash")))
             {
-                animator.Play("Splash");
-                // dropdownAnimation.options[index] = new Dropdown.OptionData("Splash");
+                StartCoroutine(PlayOneShot("Splash"));
             }
+        }
+        else if (a == Anim.Clicked)
+        {
+            StartCoroutine(PlayOneShot(Anim.Clicked.ToString()));
         }
         else
         {
-            animator.Play(a.ToString());
+            if (playingOneShot) return;
+            if (IsAnimationPlaying(a.ToString())) return;
+
+            PlayAnim(a.ToString());
         }
     }
 
@@ -109,6 +115,56 @@ public class AnimalAnimator : MonoBehaviour
     bool IsAnimationPlaying(string animationName)
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName(animationName) &&
-        animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
+        animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f;
+    }
+
+    private IEnumerator PlayOneShot(string animation, bool restart = true, float time = 0.417f)
+    {
+        if (!restart && IsAnimationPlaying(animation)) yield break;
+        if (KillOneShot()) yield return 0;
+        killCo = StartCoroutine(OneShot(animation, time));
+    }
+
+    private IEnumerator OneShot(string animation, float time)
+    {
+        playingOneShot = true;
+        PlayAnim(animation);
+        yield return new WaitForSeconds(time);
+        playingOneShot = false;
+    }
+
+    private bool KillOneShot()
+    {
+        if (killCo == null) return false;
+        StopCoroutine(killCo);
+        PlayAnim(Anim.Idle_A.ToString());
+        killCo = null;
+        playingOneShot = false;
+        return true;
+    }
+
+    private void PlayAnim(string a)
+    {
+        if (fadingTo == a) return;
+
+        fadeCo = StartCoroutine(FadeAnim(a));
+    }
+
+    private IEnumerator FadeAnim(string a)
+    {
+        fadingTo = a;
+#pragma warning disable
+        animator.CrossFade(a.ToString(), crossfadeLength);
+#pragma warning restore
+        yield return new WaitForSeconds(crossfadeLength);
+    }
+
+    private bool KillFade()
+    {
+        if (fadeCo == null) return false;
+        StopCoroutine(fadeCo);
+        fadeCo = null;
+        fadingTo = "";
+        return true;
     }
 }
