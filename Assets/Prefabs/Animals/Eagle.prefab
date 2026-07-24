@@ -267,11 +267,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6785175425659770007}
+  - component: {fileID: 384394243128666680}
   - component: {fileID: 6785175425659769994}
   - component: {fileID: 6785175425659770005}
   - component: {fileID: 6785175425659770004}
   - component: {fileID: 2168257742251642117}
-  - component: {fileID: 384394243128666680}
   - component: {fileID: 3189799656439942923}
   m_Layer: 3
   m_Name: Eagle
@@ -300,6 +300,30 @@ Transform:
   - {fileID: 6785175426169901784}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &384394243128666680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785175425659770006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animalName: Eagle
+  walkSpeed: 1
+  walkingAnimation: 6
+  idleAnimation: 6
+  scaleVariance: 0.1
+  spacing: 1
+  pushForce: 0
+  animalLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  paired: 0
+  walkFowards: 0
 --- !u!205 &6785175425659769994
 LODGroup:
   m_ObjectHideFlags: 0
@@ -387,30 +411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd20e586d51dd4f80d3fd465698f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &384394243128666680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6785175425659770006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animalName: Eagle
-  walkSpeed: 1
-  walkingAnimation: 6
-  idleAnimation: 6
-  scaleVariance: 0.1
-  spacing: 1
-  pushForce: 0
-  animalLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  paired: 0
-  walkFowards: 0
 --- !u!54 &3189799656439942923
 Rigidbody:
   m_ObjectHideFlags: 0

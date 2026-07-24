@@ -641,11 +641,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1695325359493971740}
+  - component: {fileID: 8897478940443098710}
   - component: {fileID: 4396447971443884285}
   - component: {fileID: 6108467203454568085}
   - component: {fileID: 2251027908583066438}
   - component: {fileID: 7155124505605817661}
-  - component: {fileID: 8897478940443098710}
   - component: {fileID: 1887012698097729627}
   m_Layer: 3
   m_Name: Penguin
@@ -674,6 +674,30 @@ Transform:
   - {fileID: 4047515397759674778}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8897478940443098710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8254281921942646361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animalName: Penguin
+  walkSpeed: 1
+  walkingAnimation: 6
+  idleAnimation: 8
+  scaleVariance: 0.1
+  spacing: 1
+  pushForce: 0
+  animalLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  paired: 0
+  walkFowards: 0
 --- !u!205 &4396447971443884285
 LODGroup:
   m_ObjectHideFlags: 0
@@ -761,28 +785,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd20e586d51dd4f80d3fd465698f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8897478940443098710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8254281921942646361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animalName: Penguin
-  walkSpeed: 1
-  walkingAnimation: 6
-  idleAnimation: 8
-  scaleVariance: 0.1
-  spacing: 1
-  pushForce: 0
-  animalLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!54 &1887012698097729627
 Rigidbody:
   m_ObjectHideFlags: 0

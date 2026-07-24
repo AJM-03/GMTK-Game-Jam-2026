@@ -489,11 +489,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8222402977432612599}
+  - component: {fileID: 4386856409180758758}
   - component: {fileID: 8222402977432612596}
   - component: {fileID: 8222402977432612597}
   - component: {fileID: 8222402977432612598}
   - component: {fileID: 1711621097637988007}
-  - component: {fileID: 4386856409180758758}
   - component: {fileID: 5602466263291978124}
   m_Layer: 3
   m_Name: Zebra
@@ -522,6 +522,30 @@ Transform:
   - {fileID: 8222402977395857933}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4386856409180758758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8222402977432612592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animalName: Zebra
+  walkSpeed: 1.2
+  walkingAnimation: 18
+  idleAnimation: 15
+  scaleVariance: 0.1
+  spacing: 1
+  pushForce: 0
+  animalLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  paired: 0
+  walkFowards: 0
 --- !u!205 &8222402977432612596
 LODGroup:
   m_ObjectHideFlags: 0
@@ -609,28 +633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd20e586d51dd4f80d3fd465698f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4386856409180758758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8222402977432612592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animalName: Zebra
-  walkSpeed: 1.2
-  walkingAnimation: 18
-  idleAnimation: 15
-  scaleVariance: 0.1
-  spacing: 1
-  pushForce: 0
-  animalLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!54 &5602466263291978124
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour
     [SerializeField] Transform teleportLocation;
     [SerializeField] List<GameObject> animalPrefabs = new List<GameObject>();
     [SerializeField] LayerMask barrierLayer;
+    [SerializeField] ParticleSystem puffParticles;
+    [SerializeField] ParticleSystem poofParticles;
 
 
     public float timer;
@@ -67,6 +69,8 @@ public class GameController : MonoBehaviour
     {
         if (a != highlightedAnimal || !canSelect) return;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
+        poofParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
+        poofParticles.Play();
         if (!selectedAnimal)
         {
             selectedAnimal = highlightedAnimal;
@@ -112,10 +116,16 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         a.gameObject.SetActive(false);
+        puffParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
+        puffParticles.Play();
         a.transform.position = teleportLocation.position + new Vector3(-a.spacing / 2, 0, 0);
         a.GetComponent<CapsuleCollider>().excludeLayers = barrierLayer;
 
+        yield return 0;
+
         b.gameObject.SetActive(false);
+        puffParticles.transform.position = b.transform.position + new Vector3(0, 0.5f, 0);
+        puffParticles.Play();
         b.transform.position = teleportLocation.position + new Vector3(a.spacing / 2, 0, 0);
         b.GetComponent<CapsuleCollider>().excludeLayers = barrierLayer;
 
@@ -124,11 +134,17 @@ public class GameController : MonoBehaviour
 
         a.gameObject.SetActive(true);
         a.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        puffParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
+        puffParticles.Play();
         a.paired = true;
         a.gameObject.layer = 0;
 
+        yield return 0;
+
         b.gameObject.SetActive(true);
         b.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        puffParticles.transform.position = b.transform.position + new Vector3(0, 0.5f, 0);
+        puffParticles.Play();
         b.paired = true;
         b.gameObject.layer = 0;
 
@@ -137,7 +153,7 @@ public class GameController : MonoBehaviour
         a.walkFowards = true;
         b.walkFowards = true;
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         Destroy(a.gameObject);
         Destroy(b.gameObject);
     }

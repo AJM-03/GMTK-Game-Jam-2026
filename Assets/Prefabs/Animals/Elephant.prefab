@@ -497,11 +497,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6217761584007469087}
+  - component: {fileID: 1304319774311660553}
   - component: {fileID: 6217761584007469084}
   - component: {fileID: 6217761584007469085}
   - component: {fileID: 6217761584007469086}
   - component: {fileID: 709363403188388487}
-  - component: {fileID: 1304319774311660553}
   - component: {fileID: 6746258933601978127}
   m_Layer: 3
   m_Name: Elephant
@@ -530,6 +530,30 @@ Transform:
   - {fileID: 6217761584842844224}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1304319774311660553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6217761584007469072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animalName: Elephant
+  walkSpeed: 0.6
+  walkingAnimation: 18
+  idleAnimation: 8
+  scaleVariance: 0.1
+  spacing: 1
+  pushForce: 0
+  animalLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  paired: 0
+  walkFowards: 0
 --- !u!205 &6217761584007469084
 LODGroup:
   m_ObjectHideFlags: 0
@@ -617,30 +641,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd20e586d51dd4f80d3fd465698f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1304319774311660553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6217761584007469072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animalName: Elephant
-  walkSpeed: 0.6
-  walkingAnimation: 18
-  idleAnimation: 8
-  scaleVariance: 0.1
-  spacing: 1
-  pushForce: 0
-  animalLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  paired: 0
-  walkFowards: 0
 --- !u!54 &6746258933601978127
 Rigidbody:
   m_ObjectHideFlags: 0

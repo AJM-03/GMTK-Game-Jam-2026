@@ -46,10 +46,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1189406532759751991}
+  - component: {fileID: 7469627128268428516}
   - component: {fileID: 1189406532759751988}
   - component: {fileID: 1189406532759751989}
   - component: {fileID: 1189406532759751990}
-  - component: {fileID: 7469627128268428516}
   - component: {fileID: 5524105686168650126}
   - component: {fileID: 3016136771918262530}
   m_Layer: 3
@@ -79,6 +79,30 @@ Transform:
   - {fileID: 1189406534033823609}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7469627128268428516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189406532759751976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animalName: Rhino
+  walkSpeed: 0.9
+  walkingAnimation: 18
+  idleAnimation: 8
+  scaleVariance: 0.1
+  spacing: 1
+  pushForce: 0
+  animalLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  paired: 0
+  walkFowards: 0
 --- !u!205 &1189406532759751988
 LODGroup:
   m_ObjectHideFlags: 0
@@ -154,30 +178,6 @@ CapsuleCollider:
   m_Height: 1.4306765
   m_Direction: 2
   m_Center: {x: 0, y: 0.4110937, z: 0.13107538}
---- !u!114 &7469627128268428516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1189406532759751976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animalName: Rhino
-  walkSpeed: 0.9
-  walkingAnimation: 18
-  idleAnimation: 8
-  scaleVariance: 0.1
-  spacing: 1
-  pushForce: 0
-  animalLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  paired: 0
-  walkFowards: 0
 --- !u!114 &5524105686168650126
 MonoBehaviour:
   m_ObjectHideFlags: 0
