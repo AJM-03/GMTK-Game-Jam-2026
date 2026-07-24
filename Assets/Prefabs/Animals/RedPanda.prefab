@@ -497,6 +497,7 @@ GameObject:
   - component: {fileID: 5418149539369064005}
   - component: {fileID: 3948795979932673041}
   - component: {fileID: 7530529109303319352}
+  - component: {fileID: 33935423769247512}
   m_Layer: 3
   m_Name: RedPanda
   m_TagString: Untagged
@@ -641,6 +642,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!95 &33935423769247512
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745761582700786767}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 10ac6f31eaaf60d4695428a8beb8dc6c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3745761583486627303
 GameObject:
   m_ObjectHideFlags: 0
