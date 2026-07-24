@@ -258,12 +258,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6357205822765265663}
-  - component: {fileID: 6357205822765265650}
-  - component: {fileID: 6357205822765265649}
-  - component: {fileID: 6357205822765265648}
-  - component: {fileID: 7637479471011596065}
   - component: {fileID: 2945420445750314279}
   - component: {fileID: 3484706350101558739}
+  - component: {fileID: 6357205822765265650}
+  - component: {fileID: 6357205822765265649}
+  - component: {fileID: 7637479471011596065}
   m_Layer: 3
   m_Name: Owl
   m_TagString: Untagged
@@ -291,6 +290,58 @@ Transform:
   - {fileID: 6357205824660434081}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2945420445750314279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6357205822765265662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animalName: Owl
+  walkSpeed: 0.7
+  walkingAnimation: 6
+  idleAnimation: 6
+  scaleVariance: 0.1
+  spacing: 1
+  pushForce: 0
+  animalLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  paired: 0
+  walkFowards: 0
+  physicMaterial: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
+--- !u!54 &3484706350101558739
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6357205822765265662}
+  serializedVersion: 4
+  m_Mass: 0.4
+  m_Drag: 1.5
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!205 &6357205822765265650
 LODGroup:
   m_ObjectHideFlags: 0
@@ -343,29 +394,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &6357205822765265648
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6357205822765265662}
-  m_Material: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.23224401
-  m_Height: 1.1645124
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.160326, z: 0.011442661}
 --- !u!114 &7637479471011596065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,57 +406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd20e586d51dd4f80d3fd465698f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2945420445750314279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6357205822765265662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animalName: Owl
-  walkSpeed: 0.7
-  walkingAnimation: 6
-  idleAnimation: 6
-  scaleVariance: 0.1
-  spacing: 1
-  pushForce: 0
-  animalLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  paired: 0
-  walkFowards: 0
---- !u!54 &3484706350101558739
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6357205822765265662}
-  serializedVersion: 4
-  m_Mass: 0.4
-  m_Drag: 1.5
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!1 &6357205823821688906
 GameObject:
   m_ObjectHideFlags: 0

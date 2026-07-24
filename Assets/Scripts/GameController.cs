@@ -124,7 +124,7 @@ public class GameController : MonoBehaviour
         puffParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
         puffParticles.Play();
         a.transform.position = teleportLocation.position + new Vector3(-a.spacing / 2, 0, 0);
-        a.GetComponent<CapsuleCollider>().excludeLayers = barrierLayer;
+        a.GetComponentInChildren<MeshCollider>().excludeLayers = barrierLayer;
 
         yield return 0;
 
@@ -132,7 +132,7 @@ public class GameController : MonoBehaviour
         puffParticles.transform.position = b.transform.position + new Vector3(0, 0.5f, 0);
         puffParticles.Play();
         b.transform.position = teleportLocation.position + new Vector3(a.spacing / 2, 0, 0);
-        b.GetComponent<CapsuleCollider>().excludeLayers = barrierLayer;
+        b.GetComponentInChildren<MeshCollider>().excludeLayers = barrierLayer;
 
         yield return new WaitForSeconds(0.3f);
 

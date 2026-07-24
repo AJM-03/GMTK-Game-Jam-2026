@@ -234,11 +234,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1888667476790325474}
   - component: {fileID: 3203623718158112497}
+  - component: {fileID: 4413814543528142729}
   - component: {fileID: 1888667476790325487}
   - component: {fileID: 1888667476790325472}
-  - component: {fileID: 1888667476790325473}
   - component: {fileID: 1616548967135531465}
-  - component: {fileID: 4413814543528142729}
   m_Layer: 3
   m_Name: Snake
   m_TagString: Untagged
@@ -287,9 +286,37 @@ MonoBehaviour:
   pushForce: 0
   animalLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   paired: 0
   walkFowards: 0
+  physicMaterial: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
+--- !u!54 &4413814543528142729
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888667476790325475}
+  serializedVersion: 4
+  m_Mass: 0.4
+  m_Drag: 1.5
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!205 &1888667476790325487
 LODGroup:
   m_ObjectHideFlags: 0
@@ -342,29 +369,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &1888667476790325473
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1888667476790325475}
-  m_Material: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.6575515
-  m_Height: 1.315103
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.6, z: -0.033887625}
 --- !u!114 &1616548967135531465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,33 +381,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd20e586d51dd4f80d3fd465698f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &4413814543528142729
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1888667476790325475}
-  serializedVersion: 4
-  m_Mass: 0.4
-  m_Drag: 1.5
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!1 &1888667477016317171
 GameObject:
   m_ObjectHideFlags: 0
