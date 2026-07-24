@@ -68,7 +68,7 @@ public class AnimalAnimator : MonoBehaviour
 
     private void Update()
     {
-        if (GetComponent<Rigidbody>().velocity.magnitude > 1)
+        if (GetComponent<Rigidbody>().velocity.magnitude > .5f)
             ChangeAnimation(animal.walkingAnimation);
         else
             ChangeAnimation(animal.idleAnimation);
