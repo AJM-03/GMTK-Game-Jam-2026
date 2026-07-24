@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class AnimalAnimator : MonoBehaviour
 {
@@ -146,6 +144,7 @@ public class AnimalAnimator : MonoBehaviour
     private void PlayAnim(string a)
     {
         if (fadingTo == a) return;
+        if (!animator.HasState(0, Animator.StringToHash(a))) return;
 
         fadeCo = StartCoroutine(FadeAnim(a));
     }
@@ -153,9 +152,7 @@ public class AnimalAnimator : MonoBehaviour
     private IEnumerator FadeAnim(string a)
     {
         fadingTo = a;
-#pragma warning disable
         animator.CrossFade(a.ToString(), crossfadeLength);
-#pragma warning restore
         yield return new WaitForSeconds(crossfadeLength);
     }
 
