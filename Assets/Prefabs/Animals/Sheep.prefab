@@ -338,11 +338,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animalName: Sheep
   walkSpeed: 0.5
   walkingAnimation: 18
   idleAnimation: 8
-  spacing: 1
   scaleVariance: 0.1
+  spacing: 1
   pushForce: 2.5
   animalLayer:
     serializedVersion: 2

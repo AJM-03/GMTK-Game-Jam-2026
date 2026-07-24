@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Animal Info")]
+    public string animalName;
     [SerializeField][Range(0.3f, 2.5f)] float walkSpeed = 1.5f;  // How quickly it moves
     public AnimalAnimator.Anim walkingAnimation = AnimalAnimator.Anim.Walk;
     public AnimalAnimator.Anim idleAnimation = AnimalAnimator.Anim.Idle_A;

@@ -63,11 +63,18 @@ public class GameController : MonoBehaviour
 
     public void SelectAnimal(Animal a)
     {
-        Debug.Log("Clicked " + a.gameObject.name);
         if (a != highlightedAnimal) return;
-        Debug.Log("Hit");
-
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
+        if (!selectedAnimal)
+        {
+            selectedAnimal = highlightedAnimal;
+        }
+        else
+        {
+            if (PairAnimals(a, selectedAnimal)) return;
+
+            selectedAnimal = a;
+        }
     }
 
     public void MouseEnter(Animal a)
@@ -84,9 +91,17 @@ public class GameController : MonoBehaviour
 
     }
 
-    private void PairAnimals()
+    private bool PairAnimals(Animal a, Animal b)
     {
-        // Check if pair is correct
-        // Add score
+        if (a.animalName == b.animalName)
+        {
+            score += 2;
+            Destroy(a.gameObject);
+            Destroy(b.gameObject);
+            highlightedAnimal = null;
+            selectedAnimal = null;
+            return true;
+        }
+        return false;
     }
 }

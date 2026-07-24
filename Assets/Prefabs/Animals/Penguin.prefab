@@ -773,6 +773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animalName: Penguin
   walkSpeed: 1
   walkingAnimation: 6
   idleAnimation: 8
