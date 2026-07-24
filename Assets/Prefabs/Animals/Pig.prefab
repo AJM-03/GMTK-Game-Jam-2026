@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalName: Pig
-  walkSpeed: 0.6
+  walkSpeed: 0.8
   walkingAnimation: 18
   idleAnimation: 8
   scaleVariance: 0.1
@@ -416,6 +416,8 @@ MonoBehaviour:
   animalLayer:
     serializedVersion: 2
     m_Bits: 8
+  paired: 0
+  walkFowards: 0
 --- !u!205 &8203140888846916380
 LODGroup:
   m_ObjectHideFlags: 0

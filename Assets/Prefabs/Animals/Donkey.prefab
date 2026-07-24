@@ -490,7 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalName: Donkey
-  walkSpeed: 0.5
+  walkSpeed: 0.7
   walkingAnimation: 18
   idleAnimation: 8
   scaleVariance: 0.1
@@ -500,6 +500,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   paired: 0
+  walkFowards: 0
 --- !u!54 &2685340856209183289
 Rigidbody:
   m_ObjectHideFlags: 0
