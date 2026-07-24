@@ -13,7 +13,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     public AnimalAnimator.Anim walkingAnimation = AnimalAnimator.Anim.Walk;
     public AnimalAnimator.Anim idleAnimation = AnimalAnimator.Anim.Idle_A;
     [Range(0f, 0.2f)] public float scaleVariance = 0.1f;  // How much the size of the animal will vary
-    [SerializeField] float spacing = 1;  // How far other animals should be from it
+    public float spacing = 1;  // How far other animals should be from it
 
 
     [Header("Movement")]
@@ -21,6 +21,8 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     [SerializeField] LayerMask animalLayer;
     private bool canJump = false;
     private bool movingIn;
+    [HideInInspector] public bool paired;
+    [HideInInspector] public bool walkFowards;
 
 
     private GameController controller;
@@ -37,37 +39,44 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     
     void Update()
     {
-        bool castHit = !CastMovement(transform.forward);
-        if (Vector3.Distance(transform.position, controller.moveTowardsLocation.position) > spacing && !castHit)
+        if (!paired)
         {
-            Vector3 dir = controller.moveTowardsLocation.position - transform.position;
-            rb.AddForce((dir / dir.magnitude) * walkSpeed * 100 * Time.deltaTime);
-        }
-
-        if (castHit && !Mathf.Approximately(0, transform.position.x))
-        {
-            bool moveLeft = transform.position.x > 0;
-            if (movingIn) moveLeft = !moveLeft;
-            Vector3 dir = moveLeft ? -transform.right : transform.right;
-            bool sideCast = CastMovement(dir);
-            if (sideCast)
+            bool castHit = !CastMovement(transform.forward);
+            if (Vector3.Distance(transform.position, controller.moveTowardsLocation.position) > spacing && !castHit)
             {
-                rb.AddForce((dir / dir.magnitude) * walkSpeed *.75f * 100 * Time.deltaTime);
+                Vector3 dir = controller.moveTowardsLocation.position - transform.position;
+                rb.AddForce((dir / dir.magnitude) * walkSpeed * 100 * Time.deltaTime);
             }
-        }
 
-        if (!CastMovement(-transform.up))
+            if (castHit && !Mathf.Approximately(0, transform.position.x))
+            {
+                bool moveLeft = transform.position.x > 0;
+                if (movingIn) moveLeft = !moveLeft;
+                Vector3 dir = moveLeft ? -transform.right : transform.right;
+                bool sideCast = CastMovement(dir);
+                if (sideCast)
+                {
+                    rb.AddForce((dir / dir.magnitude) * walkSpeed * 100 * Time.deltaTime);
+                }
+            }
+
+            if (!CastMovement(-transform.up))
+            {
+                rb.AddForce(-transform.up * 1000 * Time.deltaTime);
+            }
+
+            if (!CastMovement(transform.up) && canJump)
+            {
+                rb.AddForce(transform.up * 100 * Time.deltaTime, ForceMode.Impulse);
+                //canJump = false;
+            }
+
+            transform.LookAt(controller.moveTowardsLocation);
+        }
+        else if (walkFowards)
         {
-            rb.AddForce(-transform.up * 1000 * Time.deltaTime);
+            rb.AddForce(Vector3.forward * walkSpeed * 100 * Time.deltaTime);
         }
-
-        if (!CastMovement(transform.up) && canJump)
-        {
-            rb.AddForce(transform.up * 100 * Time.deltaTime, ForceMode.Impulse);
-            //canJump = false;
-        }
-
-        transform.LookAt(controller.moveTowardsLocation);
     }
 
 

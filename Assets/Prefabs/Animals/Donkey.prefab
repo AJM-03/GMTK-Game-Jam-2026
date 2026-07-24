@@ -494,11 +494,12 @@ MonoBehaviour:
   walkingAnimation: 18
   idleAnimation: 8
   scaleVariance: 0.1
-  spacing: 0
+  spacing: 1
   pushForce: 0
   animalLayer:
     serializedVersion: 2
     m_Bits: 0
+  paired: 0
 --- !u!54 &2685340856209183289
 Rigidbody:
   m_ObjectHideFlags: 0

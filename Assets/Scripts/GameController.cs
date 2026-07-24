@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
     public Transform moveTowardsLocation;
     [SerializeField] Transform teleportLocation;
     [SerializeField] List<GameObject> animalPrefabs = new List<GameObject>();
+    [SerializeField] LayerMask barrierLayer;
 
 
     public float timer;
@@ -17,6 +18,7 @@ public class GameController : MonoBehaviour
     private Animal highlightedAnimal;
     private Animal selectedAnimal;
     private int possiblePairs;
+    private bool canSelect = true;
 
 
 
@@ -63,7 +65,7 @@ public class GameController : MonoBehaviour
 
     public void SelectAnimal(Animal a)
     {
-        if (a != highlightedAnimal) return;
+        if (a != highlightedAnimal || !canSelect) return;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
         if (!selectedAnimal)
         {
@@ -93,15 +95,50 @@ public class GameController : MonoBehaviour
 
     private bool PairAnimals(Animal a, Animal b)
     {
-        if (a.animalName == b.animalName)
+        if (a.animalName == b.animalName && a != b)
         {
             score += 2;
-            Destroy(a.gameObject);
-            Destroy(b.gameObject);
             highlightedAnimal = null;
             selectedAnimal = null;
+            StartCoroutine(MovePair(a, b));
             return true;
         }
         return false;
+    }
+
+    private IEnumerator MovePair(Animal a, Animal b)
+    {
+        canSelect = false;
+        yield return new WaitForSeconds(0.5f);
+
+        a.gameObject.SetActive(false);
+        a.transform.position = teleportLocation.position + new Vector3(-a.spacing / 2, 0, 0);
+        a.GetComponent<CapsuleCollider>().excludeLayers = barrierLayer;
+
+        b.gameObject.SetActive(false);
+        b.transform.position = teleportLocation.position + new Vector3(a.spacing / 2, 0, 0);
+        b.GetComponent<CapsuleCollider>().excludeLayers = barrierLayer;
+
+        yield return new WaitForSeconds(0.3f);
+        canSelect = true;
+
+        a.gameObject.SetActive(true);
+        a.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        a.paired = true;
+        a.gameObject.layer = 0;
+
+        b.gameObject.SetActive(true);
+        b.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        b.paired = true;
+        b.gameObject.layer = 0;
+
+
+        yield return new WaitForSeconds(0.25f);
+        a.walkFowards = true;
+        b.walkFowards = true;
+
+        yield return new WaitForSeconds(2);
+        Destroy(a.gameObject);
+        Destroy(b.gameObject);
     }
 }
