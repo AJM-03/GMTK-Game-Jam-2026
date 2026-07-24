@@ -55,7 +55,7 @@ public class GameController : MonoBehaviour
     private void SpawnAnimal()
     {
         GameObject newAnimal = Instantiate(animalPrefabs[Random.Range(0, animalPrefabs.Count)],
-                                           new Vector3(Random.Range(-15, 15), 0, Random.Range(-20, -5)),
+                                           new Vector3(Random.Range(-15, 15), 0.5f, Random.Range(-20, -5)),
                                            Quaternion.identity);
         Animal animalScript = newAnimal.GetComponent<Animal>();
         newAnimal.transform.localScale *= Random.Range(1f - animalScript.scaleVariance, 1f + animalScript.scaleVariance);
