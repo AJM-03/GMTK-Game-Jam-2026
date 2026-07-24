@@ -5,9 +5,11 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public float startingTime;
+    [SerializeField] int targetNumberOfAnimals;
     public Transform moveTowardsLocation;
     [SerializeField] Transform teleportLocation;
     [SerializeField] List<GameObject> animalPrefabs = new List<GameObject>();
+    [SerializeField] Transform spawnPosition;
     [SerializeField] LayerMask barrierLayer;
     [SerializeField] ParticleSystem puffParticles;
     [SerializeField] ParticleSystem poofParticles;
@@ -39,7 +41,7 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         timer = startingTime;
-        SpawnAnimals(50);
+        StartCoroutine(SpawnAnimals(targetNumberOfAnimals));
     }
 
     public void EndGame()
@@ -47,18 +49,20 @@ public class GameController : MonoBehaviour
 
     }
 
-    private void SpawnAnimals(int quantity)
+    private IEnumerator SpawnAnimals(int quantity)
     {
         for (int i = 0; i < quantity; i++)
         {
             SpawnAnimal();
+            yield return new WaitForSeconds(0.1f);
         }
     }
+
 
     private void SpawnAnimal()
     {
         GameObject newAnimal = Instantiate(animalPrefabs[Random.Range(0, animalPrefabs.Count)],
-                                           new Vector3(Random.Range(-15, 15), 0.5f, Random.Range(-20, -5)),
+                                           spawnPosition.position + new Vector3(Random.Range(-spawnPosition.localScale.x / 2, spawnPosition.localScale.x / 2), 0, Random.Range(-spawnPosition.localScale.z / 2, -spawnPosition.localScale.z / 2)),
                                            Quaternion.identity);
         Animal animalScript = newAnimal.GetComponent<Animal>();
         newAnimal.transform.localScale *= Random.Range(1f - animalScript.scaleVariance, 1f + animalScript.scaleVariance);
@@ -106,6 +110,7 @@ public class GameController : MonoBehaviour
             highlightedAnimal = null;
             selectedAnimal = null;
             StartCoroutine(MovePair(a, b));
+            StartCoroutine(SpawnAnimals(2));
             return true;
         }
         return false;

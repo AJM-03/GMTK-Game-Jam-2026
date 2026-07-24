@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class WaterLevel : MonoBehaviour
 {
-    public float maxHeight, minHeight, animateHeight, animateSpeed;
+    public float maxHeight, minHeight, animateHeight, animateSpeed, animateRot;
     private GameController controller;
     private Transform parent;
 
@@ -15,6 +15,7 @@ public class WaterLevel : MonoBehaviour
         controller = FindObjectOfType<GameController>();
         parent = transform.parent;
         parent.DOLocalMoveY(animateHeight, animateSpeed).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        parent.DOLocalRotate(new Vector3(animateRot, 0, 0), animateSpeed * 2.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     void Update()
