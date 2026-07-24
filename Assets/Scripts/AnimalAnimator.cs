@@ -68,6 +68,8 @@ public class AnimalAnimator : MonoBehaviour
 
     private void Update()
     {
+        if (IsAnimationPlaying(Anim.Spin.ToString())) return;
+        if (IsAnimationPlaying(Anim.Clicked.ToString())) return;
         if (GetComponent<Rigidbody>().velocity.magnitude > .5f)
             ChangeAnimation(animal.walkingAnimation);
         else
@@ -102,5 +104,11 @@ public class AnimalAnimator : MonoBehaviour
     public void ChangeShapekey(Emotion e)
     {
         animator.Play(e.ToString());
+    }
+
+    bool IsAnimationPlaying(string animationName)
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName(animationName) &&
+        animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
     }
 }

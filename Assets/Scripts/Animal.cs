@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(AnimalAnimator))]
-public class Animal : MonoBehaviour
+public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Animal Info")]
     [SerializeField][Range(0.3f, 2.5f)] float walkSpeed = 1.5f;  // How quickly it moves
@@ -35,15 +36,6 @@ public class Animal : MonoBehaviour
     
     void Update()
     {
-        //for (int i = 0; i < controller.animals.Count; i++)  // Move away from other enemies
-        //{
-        //    if (controller.animals[i] != null && controller.animals[i].transform != transform && Vector3.Distance(transform.position, controller.animals[i].transform.position) < spacing)
-        //    {
-        //        Vector3 dir = controller.moveTowardsLocation.position - transform.position;
-        //        rb.AddForce((dir / dir.magnitude) * -pushForce * 100 * Time.deltaTime / Vector3.Distance(transform.position, controller.animals[i].transform.position));
-        //    }
-        //}
-
         bool castHit = !CastMovement(transform.forward);
         if (Vector3.Distance(transform.position, controller.moveTowardsLocation.position) > spacing && !castHit)
         {
@@ -106,12 +98,17 @@ public class Animal : MonoBehaviour
         //  Perform the sphere cast
         if (Physics.SphereCast(origin, worldRadius, direction, out RaycastHit hit, spacing, animalLayer))
         {
-            Debug.Log($"Hit {hit.collider.name} at distance {hit.distance}");
+            //Debug.Log($"Hit {hit.collider.name} at distance {hit.distance}");
             return false;
         }
 
         return true;
     }
+
+
+    public void OnPointerEnter(PointerEventData eventData) { controller.MouseEnter(this); }
+    public void OnPointerExit(PointerEventData eventData) { controller.MouseExit(this); }
+    public void OnPointerDown(PointerEventData eventData) { controller.SelectAnimal(this); }
 
 
     private void OnDrawGizmos()

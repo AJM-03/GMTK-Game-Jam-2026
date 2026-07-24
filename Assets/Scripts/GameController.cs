@@ -61,8 +61,26 @@ public class GameController : MonoBehaviour
         animals.Add(animalScript);
     }
 
-    private void SelectAnimal()
+    public void SelectAnimal(Animal a)
     {
+        Debug.Log("Clicked " + a.gameObject.name);
+        if (a != highlightedAnimal) return;
+        Debug.Log("Hit");
+
+        a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
+    }
+
+    public void MouseEnter(Animal a)
+    {
+        if (highlightedAnimal != a) highlightedAnimal = a;
+        a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Clicked);
+
+    }
+
+    public void MouseExit(Animal a)
+    {
+        if (highlightedAnimal == a) highlightedAnimal = null;
+        a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Idle_A);
 
     }
 
