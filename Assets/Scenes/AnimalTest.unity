@@ -703,7 +703,7 @@ MonoBehaviour:
   moveTowardsLocation: {fileID: 276627711}
   teleportLocation: {fileID: 0}
   animalPrefabs:
-  - {fileID: 8213333107304296638, guid: f2d37b34e3e70a545afb6ca990777dd6, type: 3}
+  - {fileID: 8674180621920991270, guid: fe342ffcd26528e40ac1466c1a886491, type: 3}
   timer: 0
   score: 0
   animals: []
