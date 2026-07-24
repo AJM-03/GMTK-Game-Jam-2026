@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
-        SpawnAnimals(25);
+        SpawnAnimals(50);
     }
 
     public void EndGame()
@@ -53,9 +53,10 @@ public class GameController : MonoBehaviour
     private void SpawnAnimal()
     {
         GameObject newAnimal = Instantiate(animalPrefabs[Random.Range(0, animalPrefabs.Count)],
-                                           new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5)),
+                                           new Vector3(Random.Range(-15, 15), 0, Random.Range(-20, -5)),
                                            Quaternion.identity);
         Animal animalScript = newAnimal.GetComponent<Animal>();
+        newAnimal.transform.localScale *= Random.Range(1f - animalScript.scaleVariance, 1f + animalScript.scaleVariance);
         animalScript.SpawnAnimal(this);
         animals.Add(animalScript);
     }

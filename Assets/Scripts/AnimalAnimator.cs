@@ -68,12 +68,12 @@ public class AnimalAnimator : MonoBehaviour
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, prevPosition) > 0.005f)
+        if (GetComponent<Rigidbody>().velocity.magnitude > .5f)
             ChangeAnimation(animal.walkingAnimation);
         else
             ChangeAnimation(animal.idleAnimation);
 
-        prevPosition = transform.position;
+        //prevPosition = transform.position;
     }
 
 
