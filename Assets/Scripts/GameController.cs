@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,8 @@ public class GameController : MonoBehaviour
     [SerializeField] LayerMask barrierLayer;
     [SerializeField] ParticleSystem puffParticles;
     [SerializeField] ParticleSystem poofParticles;
-
-
+    [SerializeField] List<AudioClip> poofSounds = new List<AudioClip>();
+    [SerializeField] AudioSource audioSource;
     public float timer;
     public float score;
 
@@ -23,8 +24,6 @@ public class GameController : MonoBehaviour
     private Animal selectedAnimal;
     private int possiblePairs;
     private bool canSelect = true;
-
-
 
     void Start()
     {
@@ -61,11 +60,11 @@ public class GameController : MonoBehaviour
 
     private void SpawnAnimal()
     {
-        GameObject newAnimal = Instantiate(animalPrefabs[Random.Range(0, animalPrefabs.Count)],
-                                           spawnPosition.position + new Vector3(Random.Range(-spawnPosition.localScale.x / 2, spawnPosition.localScale.x / 2), 0, Random.Range(-spawnPosition.localScale.z / 2, -spawnPosition.localScale.z / 2)),
+        GameObject newAnimal = Instantiate(animalPrefabs[UnityEngine.Random.Range(0, animalPrefabs.Count)],
+                                           spawnPosition.position + new Vector3(UnityEngine.Random.Range(-spawnPosition.localScale.x / 2, spawnPosition.localScale.x / 2), 0, UnityEngine.Random.Range(-spawnPosition.localScale.z / 2, -spawnPosition.localScale.z / 2)),
                                            Quaternion.identity);
         Animal animalScript = newAnimal.GetComponent<Animal>();
-        newAnimal.transform.localScale *= Random.Range(1f - animalScript.scaleVariance, 1f + animalScript.scaleVariance);
+        newAnimal.transform.localScale *= UnityEngine.Random.Range(1f - animalScript.scaleVariance, 1f + animalScript.scaleVariance);
         animalScript.SpawnAnimal(this);
         animals.Add(animalScript);
     }
@@ -76,6 +75,9 @@ public class GameController : MonoBehaviour
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
         poofParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
         poofParticles.Play();
+        int randomIndex = UnityEngine.Random.Range(0, poofSounds.Count);
+        audioSource.PlayOneShot(poofSounds[randomIndex]);
+
         if (!selectedAnimal)
         {
             selectedAnimal = highlightedAnimal;
