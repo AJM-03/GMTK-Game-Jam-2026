@@ -490,10 +490,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.28925946
+  m_Radius: 0.2459301
   m_Height: 0.72636986
   m_Direction: 2
-  m_Center: {x: -0.016831398, y: 0.19106188, z: -0.043919325}
+  m_Center: {x: -0.016831398, y: 0.23439124, z: -0.043919325}
 --- !u!114 &5524609634958436975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,8 +520,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalName: Crab
   walkSpeed: 0.7
-  walkingAnimation: 16
-  idleAnimation: 16
+  walkingAnimation: 18
+  idleAnimation: 8
   scaleVariance: 0.1
   spacing: 1
   pushForce: 0
