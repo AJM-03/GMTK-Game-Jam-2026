@@ -705,6 +705,7 @@ MonoBehaviour:
   - {fileID: 7100625709073867658, guid: 50bf0d89f095438448e61792c16f8bef, type: 3}
   - {fileID: 5810342360009038440, guid: 8459140a28c7eac4d8b170b721453d02, type: 3}
   - {fileID: 2218649907829803684, guid: a6002dee3229d954384f4b1de9a0901d, type: 3}
+  - {fileID: 97118644036229688, guid: 5c930260c23074540b1957aa31d7b0d7, type: 3}
   barrierLayer:
     serializedVersion: 2
     m_Bits: 64
