@@ -104,6 +104,10 @@ public class GameController : MonoBehaviour
     {
         gameRunning = false;
 
+        int highscore = 0;
+        if (PlayerPrefs.HasKey("Highscore")) highscore = PlayerPrefs.GetInt("Highscore");
+        if (score > highscore) PlayerPrefs.SetInt("Highscore", score);
+
         if (highlightedAnimal != null) highlightedAnimal.outlineColour = 0;
         if (selectedAnimal != null) selectedAnimal.outlineColour = 0;
 

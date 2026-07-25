@@ -1,12 +1,15 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     public CanvasGroup menuCanvasGroup, optionsCanvasGroup;
+    public TMP_Text highscoreText;
+    [HideInInspector] int highscore;
 
     public void InitMenu()
     {
@@ -16,6 +19,14 @@ public class MainMenu : MonoBehaviour
         optionsCanvasGroup.alpha = 0f;
         optionsCanvasGroup.interactable = false;
         optionsCanvasGroup.blocksRaycasts = false;
+
+        highscoreText.transform.parent.gameObject.SetActive(false);
+        if (PlayerPrefs.HasKey("Highscore")) highscore = PlayerPrefs.GetInt("Highscore");
+        if (highscore != 0)
+        {
+            highscoreText.transform.parent.gameObject.SetActive(true);
+            highscoreText.text = highscore.ToString();
+        }
     }
 
     public void PlayButton()
