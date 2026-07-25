@@ -439,7 +439,7 @@ MonoBehaviour:
   pushForce: 0
   animalLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 776
   paired: 0
   walkFowards: 0
   physicMaterial: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
