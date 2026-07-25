@@ -40450,7 +40450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingTime: 150
   targetNumberOfAnimals: 10
-  targetNumberOfPairs: 1
+  targetNumberOfPairs: 2
   moveTowardsLocation: {fileID: 276627711}
   teleportLocation: {fileID: 276627711}
   animalPrefabs:

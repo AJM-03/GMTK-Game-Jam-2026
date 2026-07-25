@@ -225,8 +225,16 @@ public class GameController : MonoBehaviour
             pairAudioSource.Play();
             highlightedAnimal = null;
             selectedAnimal = null;
+            animals.Remove(a);
+            animals.Remove(b);
+            possiblePairs--;
+            if (animals.Count(n => n.animalName == a.animalName) > 1)
+                possiblePairs++;
             StartCoroutine(MovePair(a, b));
-            StartCoroutine(SpawnAnimals(2));
+            targetNumberOfAnimals++;
+            if (targetNumberOfAnimals > 60) targetNumberOfAnimals = 60;
+            targetNumberOfPairs = targetNumberOfAnimals / 4;
+            StartCoroutine(SpawnAnimals(targetNumberOfAnimals - animals.Count));
             return true;
         }
         return false;
@@ -279,13 +287,6 @@ public class GameController : MonoBehaviour
         b.walkFowards = true;
 
         yield return new WaitForSeconds(3);
-
-        animals.Remove(a);
-        animals.Remove(b);
-
-        possiblePairs--;
-        if (animals.Count(n => n.animalName == a.animalName) > 1)
-            possiblePairs++;
 
         Destroy(a.gameObject);
         Destroy(b.gameObject);
