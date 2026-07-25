@@ -57,4 +57,10 @@ public class MainMenu : MonoBehaviour
 
         GetComponent<AudioSource>().Play();
     }
+
+    private void Update()
+    {
+        if (menuCanvasGroup.interactable && Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+    }
 }
