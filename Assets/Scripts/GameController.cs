@@ -3,12 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     public float startingTime;
     [SerializeField] int targetNumberOfAnimals;
+    [SerializeField] int targetNumberOfPairs;
     public Transform moveTowardsLocation;
     [SerializeField] Transform teleportLocation;
     [SerializeField] List<GameObject> animalPrefabs = new List<GameObject>();
@@ -132,6 +134,23 @@ public class GameController : MonoBehaviour
         do
         {
             animalType = animalPrefabs[UnityEngine.Random.Range(0, animalPrefabs.Count)];
+
+            int x = targetNumberOfPairs - possiblePairs;
+            if (x > 0 && animals.Count >= targetNumberOfAnimals - x)
+            {
+                //Debug.Log("Looking for a pair! " + possiblePairs + " - " + animals.Count);
+                bool hit = false;
+                foreach (Animal a in animals)
+                {
+                    if (a.animalName == animalType.name)
+                    {
+                        hit = true;
+                        //Debug.Log("Found a " + animalType.name + " pair!");
+                        break;
+                    }
+                }
+                if (!hit) animalType = null;
+            }
         } while (animalType == null);
 
 
@@ -142,15 +161,9 @@ public class GameController : MonoBehaviour
         newAnimal.transform.localScale *= UnityEngine.Random.Range(1f - animalScript.scaleVariance, 1f + animalScript.scaleVariance);
 
 
-        foreach(Animal a in animals)
-        {
-            if (a.animalName == animalScript.animalName && !a.canBePaired)
-            {
+        if (animals.Count(n => n.animalName == animalScript.animalName) == 1)
                 possiblePairs++;
-                a.canBePaired = true;
-                animalScript.canBePaired = true;
-            }
-        }
+
         animals.Add(animalScript);
         animalScript.SpawnAnimal(this);
         return animalScript;
@@ -266,6 +279,14 @@ public class GameController : MonoBehaviour
         b.walkFowards = true;
 
         yield return new WaitForSeconds(3);
+
+        animals.Remove(a);
+        animals.Remove(b);
+
+        possiblePairs--;
+        if (animals.Count(n => n.animalName == a.animalName) > 1)
+            possiblePairs++;
+
         Destroy(a.gameObject);
         Destroy(b.gameObject);
     }
