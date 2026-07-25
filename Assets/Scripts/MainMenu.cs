@@ -8,10 +8,10 @@ public class MainMenu : MonoBehaviour
 
 public void PlayButton()
     {
-        SceneManager.LoadScene("MainScene");
+        StartCoroutine(FindObjectOfType<GameController>().StartGame());
     }
 
-public void OptionsButton()
+    public void OptionsButton()
     {
         SceneManager.LoadScene("Options");
     }

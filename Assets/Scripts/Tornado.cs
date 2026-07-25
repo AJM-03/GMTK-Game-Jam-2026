@@ -9,9 +9,11 @@ public class Tornado : MonoBehaviour
     public float launchDirection;
     public float moveSpeed;
     private List<Animal> animals = new List<Animal>();
+    private AudioSource audio;
 
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         StartCoroutine(Move());
     }
 
@@ -19,6 +21,11 @@ public class Tornado : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(25, 50));
         transform.DOMoveX(-transform.position.x, moveSpeed);
+        audio.Play();
+        yield return new WaitForSeconds(moveSpeed);
+        audio.DOFade(0, 0.3f);
+        yield return new WaitForSeconds(0.5f);
+        audio.Stop();
     }
 
     public void OnTriggerEnter(Collider collision)

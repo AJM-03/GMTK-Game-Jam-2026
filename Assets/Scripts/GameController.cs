@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,8 +19,17 @@ public class GameController : MonoBehaviour
     [SerializeField] AudioSource poofAudioSource;
     [SerializeField] AudioSource pairAudioSource;
 
+    [Header("Menu")]
+    [SerializeField] CanvasGroup mainMenuCanvas;
+    [SerializeField] CanvasGroup HUDCanvas;
+    [SerializeField] CanvasGroup ThunderCanvas;
+    [SerializeField] ParticleSystem rainParticles;
+    [SerializeField] Transform menuAnimalPosition;
+    [HideInInspector] public Animal menuAnimal;
+
     public float timer;
     public int score;
+    [HideInInspector] public bool gameRunning;
 
     public List<Animal> animals = new List<Animal>();
     private Animal highlightedAnimal;
@@ -29,20 +39,50 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        StartGame();
+        gameRunning = false;
+        timer = startingTime;
+        HUDCanvas.alpha = 0f;
+        ThunderCanvas.alpha = 0f;
+        mainMenuCanvas.alpha = 1f;
+        mainMenuCanvas.interactable = true;
+        menuAnimal = SpawnAnimal();
+        menuAnimal.transform.position = menuAnimalPosition.position;
+        menuAnimal.transform.rotation = menuAnimalPosition.rotation;
     }
 
 
     void Update()
     {
-        timer -=Time.deltaTime;
+        if (gameRunning)
+            timer -=Time.deltaTime;
     }
 
 
-    public void StartGame()
+    public IEnumerator StartGame()
     {
-        timer = startingTime;
+        mainMenuCanvas.DOFade(0, 0.2f).SetEase(Ease.InSine);
+        mainMenuCanvas.interactable = false;
+        mainMenuCanvas.blocksRaycasts = false;
+
+        ThunderCanvas.DOFade(1, 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutQuart);
+        ThunderCanvas.GetComponent<AudioSource>().Play();
+
+        menuAnimal.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Jump);
+
+        yield return new WaitForSeconds(0.417f);
+
+        menuAnimal.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Fear);
+        rainParticles.Play();
+        rainParticles.GetComponent<AudioSource>().Play();
+
+
+        yield return new WaitForSeconds(3);
+
         StartCoroutine(SpawnAnimals(targetNumberOfAnimals));
+        gameRunning = true;
+
+        yield return new WaitForSeconds(2.5f);
+        HUDCanvas.DOFade(1, 0.6f).SetEase(Ease.OutSine);
     }
 
     public void EndGame()
@@ -60,7 +100,7 @@ public class GameController : MonoBehaviour
     }
 
 
-    private void SpawnAnimal()
+    private Animal SpawnAnimal()
     {
         GameObject animalType;
         do
@@ -87,11 +127,12 @@ public class GameController : MonoBehaviour
         }
         animals.Add(animalScript);
         animalScript.SpawnAnimal(this);
+        return animalScript;
     }
 
     public void SelectAnimal(Animal a)
     {
-        if (a == selectedAnimal || a != highlightedAnimal || !canSelect) return;
+        if (!gameRunning || a == selectedAnimal || a != highlightedAnimal || !canSelect) return;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
         SwapLayer(a.gameObject, "Selected");
         poofParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
@@ -113,6 +154,7 @@ public class GameController : MonoBehaviour
 
     public void MouseEnter(Animal a)
     {
+        if (!gameRunning) return;
         if (highlightedAnimal != a) highlightedAnimal = a;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Clicked);
         if (selectedAnimal != a) SwapLayer(a.gameObject, "Highlighted");
@@ -120,6 +162,7 @@ public class GameController : MonoBehaviour
 
     public void MouseExit(Animal a)
     {
+        if (!gameRunning) return;
         if (highlightedAnimal == a) highlightedAnimal = null;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Idle_A);
         if (selectedAnimal != a) SwapLayer(a.gameObject, "Animal");

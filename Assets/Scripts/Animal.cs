@@ -20,7 +20,6 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     [Header("Movement")]
     [SerializeField] float pushForce;  // How animals get pushed away from eachother
     [SerializeField] LayerMask animalLayer;
-    private bool canJump = false;
     private int moveDir;
     [HideInInspector] public bool paired;
     [HideInInspector] public bool walkFowards;
@@ -30,7 +29,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     [HideInInspector] public bool canBePaired;
 
 
-    private GameController controller;
+    [HideInInspector] public GameController controller;
     private Rigidbody rb;
 
 
@@ -44,7 +43,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     
     void Update()
     {
-        if (!paired)
+        if (!paired && controller.gameRunning)
         {
             bool castHit = !CastMovement(transform.forward);
             if (Vector3.Distance(transform.position, controller.moveTowardsLocation.position) > spacing && !castHit)

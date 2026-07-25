@@ -66,12 +66,22 @@ public class AnimalAnimator : MonoBehaviour
         animator = GetComponent<Animator>();
         animal = GetComponent<Animal>();
 
-        ChangeAnimation(animal.idleAnimation);
-        ChangeShapekey(Emotion.Eyes_Blink);  // Start by blinking
+        if (animal.controller.menuAnimal == animal)
+        {
+            ChangeAnimation(AnimalAnimator.Anim.Eat);
+            ChangeShapekey(AnimalAnimator.Emotion.Eyes_Happy);
+        }
+        else
+        {
+            ChangeAnimation(animal.idleAnimation);
+            ChangeShapekey(Emotion.Eyes_Blink);  // Start by blinking
+        }
     }
 
     private void Update()
     {
+        if (!animal.controller.gameRunning) return;
+
         if (!animal.isGrounded)
             ChangeAnimation(animal.airAnimation);
         else if (GetComponent<Rigidbody>().velocity.magnitude > .5f)
@@ -102,6 +112,11 @@ public class AnimalAnimator : MonoBehaviour
         {
             StartCoroutine(PlayOneShot(Anim.Clicked.ToString()));
             ChangeShapekey(Emotion.Eyes_Happy);
+        }
+        else if (a == Anim.Jump)
+        {
+            StartCoroutine(PlayOneShot(Anim.Jump.ToString()));
+            ChangeShapekey(Emotion.Eyes_Shrink);
         }
         else
         {
