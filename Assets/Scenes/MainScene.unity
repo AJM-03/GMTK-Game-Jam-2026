@@ -43374,7 +43374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34970d579887cea4cb3f1d87ae73bc1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingTime: 150
+  startingTime: 20
   targetNumberOfAnimals: 10
   targetNumberOfPairs: 3
   moveTowardsLocation: {fileID: 276627711}
@@ -43451,6 +43451,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7237c66d91c2d9342beaaf62e78f88a2, type: 3}
   poofAudioSource: {fileID: 2821549911688528292}
   pairAudioSource: {fileID: 8590255934619703175}
+  sailingAudioClip: {fileID: 8300000, guid: d53f5f587e65c0c4fb7ac7b0144ad25c, type: 3}
   mainMenuCanvas: {fileID: 742540475}
   HUDCanvas: {fileID: 976445368}
   ThunderCanvas: {fileID: 1604401813}

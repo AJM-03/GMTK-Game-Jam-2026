@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     [SerializeField] List<AudioClip> poofSounds = new List<AudioClip>();
     [SerializeField] AudioSource poofAudioSource;
     [SerializeField] AudioSource pairAudioSource;
+    [SerializeField] AudioClip sailingAudioClip;
 
     [Header("Menu")]
     [SerializeField] CanvasGroup mainMenuCanvas;
@@ -121,6 +122,7 @@ public class GameController : MonoBehaviour
         }
         yield return new WaitForSeconds(5f);
         Camera.main.transform.DOMove(new Vector3(3.5f, 2, 10), 6f).SetEase(Ease.InSine);
+        poofAudioSource.PlayOneShot(sailingAudioClip);
         yield return new WaitForSeconds(3f);
         FadeCanvas.DOFade(1, 2.5f).SetEase(Ease.InSine);
         MusicPlayer.Instance.ChangeIntensity(0);
