@@ -91,7 +91,7 @@ public class AnimalAnimator : MonoBehaviour
     }
 
 
-    public void ChangeAnimation(Anim a)
+    public void ChangeAnimation(Anim a, bool playOneShot = false)
     {
 
 
@@ -113,7 +113,7 @@ public class AnimalAnimator : MonoBehaviour
             StartCoroutine(PlayOneShot(Anim.Clicked.ToString()));
             ChangeShapekey(Emotion.Eyes_Happy);
         }
-        else if (a == Anim.Jump)
+        else if (a == Anim.Jump && playOneShot)
         {
             StartCoroutine(PlayOneShot(Anim.Jump.ToString()));
             ChangeShapekey(Emotion.Eyes_Shrink);

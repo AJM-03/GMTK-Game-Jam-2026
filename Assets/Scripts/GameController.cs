@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class GameController : MonoBehaviour
     [SerializeField] CanvasGroup mainMenuCanvas;
     [SerializeField] CanvasGroup HUDCanvas;
     [SerializeField] CanvasGroup ThunderCanvas;
+    [SerializeField] CanvasGroup FadeCanvas;
     [SerializeField] ParticleSystem rainParticles;
     [SerializeField] Transform menuAnimalPosition;
     [HideInInspector] public Animal menuAnimal;
@@ -43,18 +45,24 @@ public class GameController : MonoBehaviour
         timer = startingTime;
         HUDCanvas.alpha = 0f;
         ThunderCanvas.alpha = 0f;
+        FadeCanvas.alpha = 1f;
         mainMenuCanvas.alpha = 1f;
         mainMenuCanvas.interactable = true;
         menuAnimal = SpawnAnimal();
         menuAnimal.transform.position = menuAnimalPosition.position;
         menuAnimal.transform.rotation = menuAnimalPosition.rotation;
+        FadeCanvas.DOFade(0, 2f).SetEase(Ease.OutSine);
     }
 
 
     void Update()
     {
         if (gameRunning)
-            timer -=Time.deltaTime;
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                StartCoroutine(EndGame());
+        }
     }
 
 
@@ -67,7 +75,7 @@ public class GameController : MonoBehaviour
         ThunderCanvas.DOFade(1, 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutQuart);
         ThunderCanvas.GetComponent<AudioSource>().Play();
 
-        menuAnimal.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Jump);
+        menuAnimal.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Jump, true);
 
         yield return new WaitForSeconds(0.417f);
 
@@ -85,9 +93,27 @@ public class GameController : MonoBehaviour
         HUDCanvas.DOFade(1, 0.6f).SetEase(Ease.OutSine);
     }
 
-    public void EndGame()
+    public IEnumerator EndGame()
     {
+        gameRunning = false;
 
+        if (highlightedAnimal != null) SwapLayer(highlightedAnimal.gameObject, "Animal");
+        if (selectedAnimal != null) SwapLayer(selectedAnimal.gameObject, "Animal");
+
+        foreach (Animal a in animals)
+        {
+            if (a != null)
+            {
+                a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Fear);
+                a.GetComponent<AnimalAnimator>().ChangeShapekey(AnimalAnimator.Emotion.Eyes_Shrink);
+            }
+        }
+        yield return new WaitForSeconds(5f);
+        Camera.main.transform.DOMove(new Vector3(3.5f, 2, 10), 6f).SetEase(Ease.InSine);
+        yield return new WaitForSeconds(3f);
+        FadeCanvas.DOFade(1, 2.5f).SetEase(Ease.InSine);
+        yield return new WaitForSeconds(6f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private IEnumerator SpawnAnimals(int quantity)

@@ -9,39 +9,57 @@ public class Tornado : MonoBehaviour
     public float launchDirection;
     public float moveSpeed;
     private List<Animal> animals = new List<Animal>();
-    private AudioSource audio;
+    private AudioSource audioSource;
+    private GameController gameController;
+    private bool running;
 
     void Start()
     {
-        audio = GetComponent<AudioSource>();
-        StartCoroutine(Move());
+        audioSource = GetComponent<AudioSource>();
+        gameController = FindObjectOfType<GameController>();
+    }
+
+    public void Update()
+    {
+        if (gameController.gameRunning && !running)
+        {
+            StartCoroutine(Move());
+        }
     }
 
     private IEnumerator Move()
     {
-        yield return new WaitForSeconds(Random.Range(25, 50));
+        running = true;
+        yield return new WaitForSeconds(Random.Range(gameController.startingTime / 2.5f, gameController.startingTime /1.5f));
+        GetComponent<ParticleSystem>().Play();
         transform.DOMoveX(-transform.position.x, moveSpeed);
-        audio.Play();
+        audioSource.Play();
         yield return new WaitForSeconds(moveSpeed);
-        audio.DOFade(0, 0.3f);
+        audioSource.DOFade(0, 0.3f);
         yield return new WaitForSeconds(0.5f);
-        audio.Stop();
+        audioSource.Stop();
+        GetComponent<ParticleSystem>().Stop();
+        //running = false;
     }
 
     public void OnTriggerEnter(Collider collision)
     {
-        Animal animal;
-        if (collision.transform.parent.TryGetComponent<Animal>(out animal) && !animals.Contains(animal))
+        if (collision.transform.parent == null) return;
+        collision.transform.parent.TryGetComponent<Animal>(out Animal animal);
+        if (animal)
         {
-            Vector3 offset = new Vector3(
-                Random.Range(-launchDirection, launchDirection),
-                Random.Range(-launchDirection, launchDirection),
-                Random.Range(-launchDirection, launchDirection)
-            );
+            if (!animals.Contains(animal))
+            {
+                Vector3 offset = new Vector3(
+                    Random.Range(-launchDirection, launchDirection),
+                    Random.Range(-launchDirection, launchDirection),
+                    Random.Range(-launchDirection, launchDirection)
+                );
 
-            Vector3 newUp = (transform.up + offset).normalized;
-            animal.transform.GetComponent<Rigidbody>().AddForce(newUp * Random.Range(minLaunchPower, maxLaunchPower) * 100 * Time.deltaTime, ForceMode.Impulse);
-            animals.Add(animal);
+                Vector3 newUp = (transform.up + offset).normalized;
+                animal.transform.GetComponent<Rigidbody>().AddForce(newUp * Random.Range(minLaunchPower, maxLaunchPower) * 100 * Time.deltaTime, ForceMode.Impulse);
+                animals.Add(animal);
+            }
         }
     }
 }

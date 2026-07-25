@@ -8,15 +8,18 @@ public class SplashParticle : MonoBehaviour
     private float splashTimer;
     public Vector3 minPos, maxPos;
     private ParticleSystem ps;
+    private GameController controller;
 
     private void Start()
     {
+        controller = FindObjectOfType<GameController>();
         ps = GetComponent<ParticleSystem>();
     }
 
 
     void Update()
     {
+        if (!controller.gameRunning) return;
         splashTimer -= Time.deltaTime;
         if (splashTimer <= 0)
         {
