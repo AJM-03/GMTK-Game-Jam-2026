@@ -27,6 +27,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     [SerializeField] PhysicMaterial physicMaterial;
     private float flipMovementTimer;
     [HideInInspector] public bool isGrounded;
+    [HideInInspector] public bool canBePaired;
 
 
     private GameController controller;

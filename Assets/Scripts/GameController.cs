@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     [SerializeField] AudioSource pairAudioSource;
 
     public float timer;
-    public float score;
+    public int score;
 
     public List<Animal> animals = new List<Animal>();
     private Animal highlightedAnimal;
@@ -62,13 +62,31 @@ public class GameController : MonoBehaviour
 
     private void SpawnAnimal()
     {
-        GameObject newAnimal = Instantiate(animalPrefabs[UnityEngine.Random.Range(0, animalPrefabs.Count)],
+        GameObject animalType;
+        do
+        {
+            animalType = animalPrefabs[UnityEngine.Random.Range(0, animalPrefabs.Count)];
+        } while (animalType == null);
+
+
+        GameObject newAnimal = Instantiate(animalType,
                                            spawnPosition.position + new Vector3(UnityEngine.Random.Range(-spawnPosition.localScale.x / 2, spawnPosition.localScale.x / 2), 0, UnityEngine.Random.Range(-spawnPosition.localScale.z / 2, -spawnPosition.localScale.z / 2)),
                                            Quaternion.identity);
         Animal animalScript = newAnimal.GetComponent<Animal>();
         newAnimal.transform.localScale *= UnityEngine.Random.Range(1f - animalScript.scaleVariance, 1f + animalScript.scaleVariance);
-        animalScript.SpawnAnimal(this);
+
+
+        foreach(Animal a in animals)
+        {
+            if (a.animalName == animalScript.animalName && !a.canBePaired)
+            {
+                possiblePairs++;
+                a.canBePaired = true;
+                animalScript.canBePaired = true;
+            }
+        }
         animals.Add(animalScript);
+        animalScript.SpawnAnimal(this);
     }
 
     public void SelectAnimal(Animal a)
