@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd6ca3864c43424f92e1802347f1b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalName: Armadilo
+  animalName: Armadillo
   walkSpeed: 1.2
   walkingAnimation: 12
   idleAnimation: 8
@@ -416,8 +416,11 @@ MonoBehaviour:
     m_Bits: 776
   paired: 0
   walkFowards: 0
+  outlineColour: 0
   physicMaterial: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
   isGrounded: 0
+  canBePaired: 0
+  controller: {fileID: 0}
 --- !u!54 &3580499476229252545
 Rigidbody:
   m_ObjectHideFlags: 0
