@@ -545,7 +545,8 @@ GameObject:
   - component: {fileID: 6366046107768799037}
   - component: {fileID: 6366046107768799034}
   - component: {fileID: 401543042886979767}
-  m_Layer: 3
+  - component: {fileID: 5593370693457485039}
+  m_Layer: 0
   m_Name: Hornbill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -598,8 +599,11 @@ MonoBehaviour:
     m_Bits: 776
   paired: 0
   walkFowards: 0
+  outlineColour: 0
   physicMaterial: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
   isGrounded: 0
+  canBePaired: 0
+  controller: {fileID: 0}
 --- !u!54 &2491664196171600739
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -691,6 +695,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd20e586d51dd4f80d3fd465698f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &5593370693457485039
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6366046107768799033}
+  m_Material: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.8, z: 0}
 --- !u!1 &6366046107888696139
 GameObject:
   m_ObjectHideFlags: 0

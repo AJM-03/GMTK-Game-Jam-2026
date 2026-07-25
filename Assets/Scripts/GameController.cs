@@ -90,6 +90,7 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(SpawnAnimals(targetNumberOfAnimals));
         gameRunning = true;
+        menuAnimal.StartFlying(1f);
 
         yield return new WaitForSeconds(2.5f);
         HUDCanvas.DOFade(1, 0.6f).SetEase(Ease.OutSine);
@@ -251,6 +252,9 @@ public class GameController : MonoBehaviour
         puffParticles.Play();
         a.transform.position = teleportLocation.position + new Vector3(-a.spacing / 2, 0, 0);
         a.GetComponentInChildren<MeshCollider>().excludeLayers = barrierLayer;
+        a.TryGetComponent<CapsuleCollider>(out CapsuleCollider cap);
+        if (cap) cap.excludeLayers = barrierLayer;
+        cap = null;
 
         yield return 0;
 
@@ -259,11 +263,14 @@ public class GameController : MonoBehaviour
         puffParticles.Play();
         b.transform.position = teleportLocation.position + new Vector3(a.spacing / 2, 0, 0);
         b.GetComponentInChildren<MeshCollider>().excludeLayers = barrierLayer;
+        b.TryGetComponent<CapsuleCollider>(out cap);
+        if (cap) cap.excludeLayers = barrierLayer;
 
         yield return new WaitForSeconds(0.3f);
 
         a.gameObject.SetActive(true);
         a.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        a.StartFlying(4f);
         puffParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
         puffParticles.Play();
         a.paired = true;
@@ -274,6 +281,7 @@ public class GameController : MonoBehaviour
 
         b.gameObject.SetActive(true);
         b.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        b.StartFlying(4f);
         puffParticles.transform.position = b.transform.position + new Vector3(0, 0.5f, 0);
         puffParticles.Play();
         b.paired = true;
@@ -295,7 +303,10 @@ public class GameController : MonoBehaviour
 
     public void SwapLayer(GameObject obj, string layerName)
     {
-        obj.layer = LayerMask.NameToLayer(layerName);
+        obj.TryGetComponent<CapsuleCollider>(out CapsuleCollider col);
+        if (col == null)
+            obj.layer = LayerMask.NameToLayer(layerName);
+
         foreach(Transform t in obj.transform)
         {
             SwapLayer(t.gameObject, layerName);

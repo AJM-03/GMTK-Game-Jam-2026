@@ -272,7 +272,8 @@ GameObject:
   - component: {fileID: 6785175425659769994}
   - component: {fileID: 6785175425659770005}
   - component: {fileID: 2168257742251642117}
-  m_Layer: 3
+  - component: {fileID: -2202444508513978906}
+  m_Layer: 0
   m_Name: Eagle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,8 +326,11 @@ MonoBehaviour:
     m_Bits: 776
   paired: 0
   walkFowards: 0
+  outlineColour: 0
   physicMaterial: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
   isGrounded: 0
+  canBePaired: 0
+  controller: {fileID: 0}
 --- !u!54 &3189799656439942923
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -418,6 +422,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd20e586d51dd4f80d3fd465698f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &-2202444508513978906
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785175425659770006}
+  m_Material: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.8, z: 0}
 --- !u!1 &6785175425946302105
 GameObject:
   m_ObjectHideFlags: 0

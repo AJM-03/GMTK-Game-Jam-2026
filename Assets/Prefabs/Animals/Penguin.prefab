@@ -687,7 +687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalName: Penguin
   walkSpeed: 1
-  walkingAnimation: 6
+  walkingAnimation: 14
   idleAnimation: 8
   airAnimation: 12
   emotions: 010000000100000001000000010000000000000000000000020000000b0000000b0000000c0000000c0000000e000000100000000f0000000f00000011000000120000001300000014000000
@@ -699,8 +699,11 @@ MonoBehaviour:
     m_Bits: 776
   paired: 0
   walkFowards: 0
+  outlineColour: 0
   physicMaterial: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
   isGrounded: 0
+  canBePaired: 0
+  controller: {fileID: 0}
 --- !u!54 &1887012698097729627
 Rigidbody:
   m_ObjectHideFlags: 0

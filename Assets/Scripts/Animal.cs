@@ -1,7 +1,7 @@
 using cakeslice;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -41,6 +41,9 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
         controller = c;
         rb = GetComponent<Rigidbody>();
         SetupCollider();
+
+        if (controller.gameRunning) 
+            StartFlying(1.5f);
     }
 
     
@@ -223,5 +226,18 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
                 }
             }
         }
+    }
+
+
+    public void StartFlying(float flightTime)
+    {
+        TryGetComponent<CapsuleCollider>(out CapsuleCollider col);
+        if (!col) return;
+        float height = col.height;
+        Vector3 center = col.center;
+        col.height = 0;
+        col.center = Vector3.zero;
+        DOTween.To(() => col.height, x => col.height = x, height, flightTime).SetEase(Ease.InOutSine);
+        DOTween.To(() => col.center, x => col.center = x, center, flightTime).SetEase(Ease.InOutSine);
     }
 }
