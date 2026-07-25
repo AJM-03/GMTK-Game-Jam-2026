@@ -73,6 +73,7 @@ public class GameController : MonoBehaviour
     {
         if (a == selectedAnimal || a != highlightedAnimal || !canSelect) return;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
+        SwapLayer(a.gameObject, "Selected");
         poofParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
         poofParticles.Play();
         int randomIndex = UnityEngine.Random.Range(0, poofSounds.Count);
@@ -85,7 +86,7 @@ public class GameController : MonoBehaviour
         else
         {
             if (PairAnimals(a, selectedAnimal)) return;
-
+            SwapLayer(selectedAnimal.gameObject, "Animal");
             selectedAnimal = a;
         }
     }
@@ -94,12 +95,14 @@ public class GameController : MonoBehaviour
     {
         if (highlightedAnimal != a) highlightedAnimal = a;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Clicked);
+        if (selectedAnimal != a) SwapLayer(a.gameObject, "Highlighted");
     }
 
     public void MouseExit(Animal a)
     {
         if (highlightedAnimal == a) highlightedAnimal = null;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Idle_A);
+        if (selectedAnimal != a) SwapLayer(a.gameObject, "Animal");
     }
 
     private bool PairAnimals(Animal a, Animal b)
@@ -143,7 +146,7 @@ public class GameController : MonoBehaviour
         puffParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
         puffParticles.Play();
         a.paired = true;
-        a.gameObject.layer = 0;
+        SwapLayer(a.gameObject, "Default");
 
         yield return 0;
 
@@ -153,6 +156,7 @@ public class GameController : MonoBehaviour
         puffParticles.Play();
         b.paired = true;
         b.gameObject.layer = 0;
+        SwapLayer(b.gameObject, "Default");
 
 
         yield return new WaitForSeconds(0.25f);
@@ -162,5 +166,15 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(3);
         Destroy(a.gameObject);
         Destroy(b.gameObject);
+    }
+
+
+    public void SwapLayer(GameObject obj, string layerName)
+    {
+        obj.layer = LayerMask.NameToLayer(layerName);
+        foreach(Transform t in obj.transform)
+        {
+            SwapLayer(t.gameObject, layerName);
+        }
     }
 }

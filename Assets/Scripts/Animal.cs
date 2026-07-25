@@ -19,10 +19,11 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     [SerializeField] float pushForce;  // How animals get pushed away from eachother
     [SerializeField] LayerMask animalLayer;
     private bool canJump = false;
-    private bool movingIn;
+    private int moveDir;
     [HideInInspector] public bool paired;
     [HideInInspector] public bool walkFowards;
     [SerializeField] PhysicMaterial physicMaterial;
+    private float flipMovementTimer;
 
 
     private GameController controller;
@@ -33,7 +34,6 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     {
         controller = c;
         rb = GetComponent<Rigidbody>();
-        movingIn = Random.Range(0, 3) == 0;
         SetupCollider();
     }
 
@@ -51,25 +51,37 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
 
             if (castHit && !Mathf.Approximately(0, transform.position.x))
             {
-                bool moveLeft = transform.position.x > 0;
-                if (movingIn) moveLeft = !moveLeft;
-                Vector3 dir = moveLeft ? -transform.right : transform.right;
-                bool sideCast = CastMovement(dir);
-                if (sideCast)
+                if (moveDir != 0)
                 {
-                    rb.AddForce((dir / dir.magnitude) * walkSpeed * 100 * Time.deltaTime);
+                    Vector3 dir = moveDir == 1 ? -transform.right : transform.right;
+                    bool sideCast = CastMovement(dir);
+                    if (!sideCast)  // Cast hit
+                    {
+                        rb.AddForce((dir / dir.magnitude) * walkSpeed * 100 * Time.deltaTime);
+                    }
+                    //else  // Cast did not hit
+                    //{
+                    //    rb.AddForce((-dir / -dir.magnitude) * walkSpeed / 2 * 100 * Time.deltaTime);
+                    //}
                 }
             }
 
-            if (!CastMovement(-transform.up))
-            {
-                rb.AddForce(-transform.up * 1000 * Time.deltaTime);
-            }
+            //if (!CastMovement(-transform.up))
+            //{
+            //    rb.AddForce(-transform.up * 1000 * Time.deltaTime);
+            //}
 
-            if (!CastMovement(transform.up) && canJump)
+            //if (!CastMovement(transform.up) && canJump)
+            //{
+            //    rb.AddForce(transform.up * 100 * Time.deltaTime, ForceMode.Impulse);
+            //    //canJump = false;
+            //}
+
+            flipMovementTimer -= Time.deltaTime;
+            if (flipMovementTimer <= 0)
             {
-                rb.AddForce(transform.up * 100 * Time.deltaTime, ForceMode.Impulse);
-                //canJump = false;
+                moveDir = Random.Range(0, 3);
+                flipMovementTimer = Random.Range(5, 20);
             }
 
             transform.LookAt(controller.moveTowardsLocation);
