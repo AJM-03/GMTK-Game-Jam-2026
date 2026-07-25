@@ -1,5 +1,7 @@
+using cakeslice;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,6 +25,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     private int moveDir;
     [HideInInspector] public bool paired;
     [HideInInspector] public bool walkFowards;
+    [HideInInspector] public int outlineColour;
     [SerializeField] PhysicMaterial physicMaterial;
     private float flipMovementTimer;
     [HideInInspector] public bool isGrounded;
@@ -97,6 +100,8 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
         {
             rb.AddForce(Vector3.forward * walkSpeed * 100 * Time.deltaTime);
         }
+
+        CheckOutline();
     }
 
 
@@ -181,11 +186,37 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
                     collider.sharedMaterial = physicMaterial;
                     collider.sharedMesh = skinnedRenderer.sharedMesh; // Triggers automatic baking
                     skinnedRenderer.transform.localRotation = Quaternion.Euler(new Vector3(-90, 0, 0));
+
                     return;
                 }
             }
         }
 
         Debug.LogError("Mesh not found for collider in " + animalName);
+    }
+
+    private void CheckOutline()
+    {
+        LODGroup lodGroup = GetComponent<LODGroup>();
+        LOD[] lods = lodGroup.GetLODs();
+
+        for (int i = 0; i < lods.Length; i++)
+        {
+            foreach (var renderer in lods[i].renderers)
+            {
+                renderer.gameObject.TryGetComponent<Outline>(out Outline o);
+                if (o == null) o = renderer.gameObject.AddComponent<Outline>();
+
+                if (renderer != null && renderer.enabled && renderer.isVisible && outlineColour != 0)
+                {
+                    o.enabled = true;
+                    o.color = outlineColour;
+                }
+                else
+                {
+                    o.enabled = false;
+                }
+            }
+        }
     }
 }

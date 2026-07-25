@@ -97,8 +97,8 @@ public class GameController : MonoBehaviour
     {
         gameRunning = false;
 
-        if (highlightedAnimal != null) SwapLayer(highlightedAnimal.gameObject, "Animal");
-        if (selectedAnimal != null) SwapLayer(selectedAnimal.gameObject, "Animal");
+        if (highlightedAnimal != null) highlightedAnimal.outlineColour = 0;
+        if (selectedAnimal != null) selectedAnimal.outlineColour = 0;
 
         foreach (Animal a in animals)
         {
@@ -161,6 +161,7 @@ public class GameController : MonoBehaviour
         if (!gameRunning || a == selectedAnimal || a != highlightedAnimal || !canSelect) return;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
         SwapLayer(a.gameObject, "Selected");
+        a.outlineColour = 2;
         poofParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
         poofParticles.Play();
 
@@ -172,6 +173,7 @@ public class GameController : MonoBehaviour
         {
             if (PairAnimals(a, selectedAnimal)) return;
             SwapLayer(selectedAnimal.gameObject, "Animal");
+            selectedAnimal.outlineColour = 0;
             selectedAnimal = a;
         }
         int randomIndex = UnityEngine.Random.Range(0, poofSounds.Count);
@@ -183,7 +185,11 @@ public class GameController : MonoBehaviour
         if (!gameRunning) return;
         if (highlightedAnimal != a) highlightedAnimal = a;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Clicked);
-        if (selectedAnimal != a) SwapLayer(a.gameObject, "Highlighted");
+        if (selectedAnimal != a)
+        {
+            SwapLayer(a.gameObject, "Highlighted");
+            a.outlineColour = 1;
+        }
     }
 
     public void MouseExit(Animal a)
@@ -191,7 +197,11 @@ public class GameController : MonoBehaviour
         if (!gameRunning) return;
         if (highlightedAnimal == a) highlightedAnimal = null;
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Idle_A);
-        if (selectedAnimal != a) SwapLayer(a.gameObject, "Animal");
+        if (selectedAnimal != a)
+        {
+            SwapLayer(a.gameObject, "Animal");
+            a.outlineColour = 0;
+        }
     }
 
     private bool PairAnimals(Animal a, Animal b)
@@ -237,6 +247,7 @@ public class GameController : MonoBehaviour
         puffParticles.Play();
         a.paired = true;
         SwapLayer(a.gameObject, "Default");
+        a.outlineColour = 0;
 
         yield return 0;
 
@@ -247,6 +258,7 @@ public class GameController : MonoBehaviour
         b.paired = true;
         b.gameObject.layer = 0;
         SwapLayer(b.gameObject, "Default");
+        b.outlineColour = 0;
 
 
         yield return new WaitForSeconds(0.25f);
