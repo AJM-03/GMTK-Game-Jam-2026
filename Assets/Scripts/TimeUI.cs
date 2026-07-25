@@ -7,7 +7,13 @@ using UnityEngine;
 public class TimeUI : MonoBehaviour
 {
     public TMP_Text timeText;
-    public GameController gameController;
+    private GameController gameController;
+
+
+    private void Start()
+    {
+        gameController = FindObjectOfType<GameController>();
+    }
 
     public void Update()
     {
