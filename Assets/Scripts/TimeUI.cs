@@ -11,9 +11,10 @@ public class TimeUI : MonoBehaviour
     public TMP_Text timeText;
     public Slider slider;
     private GameController gameController;
-    private bool shaking;
+    private bool shaking, ticking;
     private Quaternion timerRot;
     private RectTransform timerRect;
+    public AudioSource tickingSource;
 
 
     private void Start()
@@ -33,6 +34,16 @@ public class TimeUI : MonoBehaviour
         timerRect.rotation = timerRot;
 
         if (!shaking && gameController.timer <= 5) Shake();
+        if (!ticking && gameController.timer <= 9)
+        {
+            tickingSource.Play();
+            ticking = true;
+        }
+        if (ticking && gameController.timer <= 0)
+        {
+            tickingSource.Stop();
+            ticking = false;
+        }
     }
 
     private void Shake()

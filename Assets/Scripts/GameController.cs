@@ -63,6 +63,9 @@ public class GameController : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0)
                 StartCoroutine(EndGame());
+
+            if (timer <= 60 && timer > 0 && MusicPlayer.Instance.currentIntensity != 3)
+                MusicPlayer.Instance.ChangeIntensity(3);
         }
     }
 
@@ -77,6 +80,8 @@ public class GameController : MonoBehaviour
         ThunderCanvas.GetComponent<AudioSource>().Play();
 
         menuAnimal.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Jump, true);
+
+        MusicPlayer.Instance.ChangeIntensity(1);
 
         yield return new WaitForSeconds(0.417f);
 
@@ -114,6 +119,7 @@ public class GameController : MonoBehaviour
         Camera.main.transform.DOMove(new Vector3(3.5f, 2, 10), 6f).SetEase(Ease.InSine);
         yield return new WaitForSeconds(3f);
         FadeCanvas.DOFade(1, 2.5f).SetEase(Ease.InSine);
+        MusicPlayer.Instance.ChangeIntensity(0);
         yield return new WaitForSeconds(6f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
