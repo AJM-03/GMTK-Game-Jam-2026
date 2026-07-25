@@ -41,7 +41,6 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
         controller = c;
         rb = GetComponent<Rigidbody>();
         SetupCollider();
-        moveDir = 1;
     }
 
     
@@ -50,46 +49,51 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
         if (!paired && controller.gameRunning)
         {
             bool castHit = !CastMovement(transform.forward);
-            if (Vector3.Distance(transform.position, controller.moveTowardsLocation.position) > spacing && !castHit)
+            if (Vector3.Distance(transform.position, controller.moveTowardsLocation.position) > 4.12f)
             {
-                Vector3 dir = controller.moveTowardsLocation.position - transform.position;
-                rb.AddForce((dir / dir.magnitude) * walkSpeed * 100 * Time.deltaTime);
-            }
-
-            if (castHit && !Mathf.Approximately(0, transform.position.x))
-            {
-                if (moveDir != 0)
+                if (!castHit)
                 {
-                    Vector3 dir = moveDir == 1 ? -transform.right : transform.right;
-                    bool sideCast = CastMovement(dir);
-                    if (!sideCast)  // Cast hit
+                    Vector3 dir = controller.moveTowardsLocation.position - transform.position;
+                    rb.AddForce((dir / dir.magnitude) * walkSpeed * 100 * Time.deltaTime);
+                }
+
+                if (castHit && !Mathf.Approximately(0, transform.position.x))
+                {
+                    if (moveDir != 0)
                     {
-                        rb.AddForce((dir / dir.magnitude) * walkSpeed * 50 * Time.deltaTime);
+                        Vector3 dir = moveDir == 1 ? -transform.right : transform.right;
+                        bool sideCast = CastMovement(dir);
+                        if (!sideCast)  // Cast hit
+                        {
+                            rb.AddForce((dir / dir.magnitude) * walkSpeed * 75 * Time.deltaTime);
+                        }
+                        //else  // Cast did not hit
+                        //{
+                        //    rb.AddForce((-dir / -dir.magnitude) * walkSpeed / 2 * 100 * Time.deltaTime);
+                        //}
                     }
-                    //else  // Cast did not hit
-                    //{
-                    //    rb.AddForce((-dir / -dir.magnitude) * walkSpeed / 2 * 100 * Time.deltaTime);
-                    //}
                 }
             }
+            else Debug.Log("Too Close " + animalName);
 
-            //if (!CastMovement(-transform.up))
-            //{
-            //    rb.AddForce(-transform.up * 1000 * Time.deltaTime);
-            //}
+                //if (!CastMovement(-transform.up))
+                //{
+                //    rb.AddForce(-transform.up * 1000 * Time.deltaTime);
+                //}
 
-            //if (!CastMovement(transform.up) && canJump)
-            //{
-            //    rb.AddForce(transform.up * 100 * Time.deltaTime, ForceMode.Impulse);
-            //    //canJump = false;
-            //}
+                //if (!CastMovement(transform.up) && canJump)
+                //{
+                //    rb.AddForce(transform.up * 100 * Time.deltaTime, ForceMode.Impulse);
+                //    //canJump = false;
+                //}
 
-            //flipMovementTimer -= Time.deltaTime;
-            //if (flipMovementTimer <= 0)
-            //{
-            //    moveDir = Random.Range(0, 3);
-            //    flipMovementTimer = Random.Range(5, 20);
-            //}
+                flipMovementTimer -= Time.deltaTime;
+            if (flipMovementTimer <= 0)
+            {
+                moveDir = Random.Range(0, 3);
+                if (moveDir == 0) flipMovementTimer = Random.Range(5, 15);
+                else flipMovementTimer = Random.Range(2, 5);
+            }
 
             isGrounded = !(rb.velocity.y > 0.25f || rb.velocity.y < -0.25f);
 

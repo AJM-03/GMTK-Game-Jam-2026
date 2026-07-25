@@ -30722,11 +30722,7 @@ MonoBehaviour:
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
-  m_AfterStackBundles:
-  - assemblyQualifiedName: PostProcessOutline, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  - assemblyQualifiedName: PostProcessOutlineComposite, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_AfterStackBundles: []
 --- !u!199 &346897260639172100
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -40450,7 +40446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingTime: 150
   targetNumberOfAnimals: 10
-  targetNumberOfPairs: 2
+  targetNumberOfPairs: 3
   moveTowardsLocation: {fileID: 276627711}
   teleportLocation: {fileID: 276627711}
   animalPrefabs:
