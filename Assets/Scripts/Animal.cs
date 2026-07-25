@@ -41,6 +41,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
         controller = c;
         rb = GetComponent<Rigidbody>();
         SetupCollider();
+        moveDir = 1;
     }
 
     
@@ -83,12 +84,12 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
             //    //canJump = false;
             //}
 
-            flipMovementTimer -= Time.deltaTime;
-            if (flipMovementTimer <= 0)
-            {
-                moveDir = Random.Range(0, 3);
-                flipMovementTimer = Random.Range(5, 20);
-            }
+            //flipMovementTimer -= Time.deltaTime;
+            //if (flipMovementTimer <= 0)
+            //{
+            //    moveDir = Random.Range(0, 3);
+            //    flipMovementTimer = Random.Range(5, 20);
+            //}
 
             isGrounded = !(rb.velocity.y > 0.25f || rb.velocity.y < -0.25f);
 
