@@ -11,6 +11,8 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     [SerializeField][Range(0.3f, 2.5f)] float walkSpeed = 1.5f;  // How quickly it moves
     public AnimalAnimator.Anim walkingAnimation = AnimalAnimator.Anim.Walk;
     public AnimalAnimator.Anim idleAnimation = AnimalAnimator.Anim.Idle_A;
+    public AnimalAnimator.Anim airAnimation = AnimalAnimator.Anim.Lay;
+    public List<AnimalAnimator.Emotion> emotions = new List<AnimalAnimator.Emotion>();
     [Range(0f, 0.2f)] public float scaleVariance = 0.1f;  // How much the size of the animal will vary
     public float spacing = 1;  // How far other animals should be from it
 
@@ -24,6 +26,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
     [HideInInspector] public bool walkFowards;
     [SerializeField] PhysicMaterial physicMaterial;
     private float flipMovementTimer;
+    [HideInInspector] public bool isGrounded;
 
 
     private GameController controller;
@@ -57,7 +60,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
                     bool sideCast = CastMovement(dir);
                     if (!sideCast)  // Cast hit
                     {
-                        rb.AddForce((dir / dir.magnitude) * walkSpeed * 100 * Time.deltaTime);
+                        rb.AddForce((dir / dir.magnitude) * walkSpeed * 50 * Time.deltaTime);
                     }
                     //else  // Cast did not hit
                     //{
@@ -83,6 +86,10 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
                 moveDir = Random.Range(0, 3);
                 flipMovementTimer = Random.Range(5, 20);
             }
+
+            isGrounded = !(rb.velocity.y > 0.25f || rb.velocity.y < -0.25f);
+
+            //Debug.DrawRay(transform.position, -Vector3.up, Color.blue, spacing);
 
             transform.LookAt(controller.moveTowardsLocation);
         }

@@ -188,6 +188,8 @@ MonoBehaviour:
   walkSpeed: 1
   walkingAnimation: 17
   idleAnimation: 8
+  airAnimation: 12
+  emotions: 010000000100000001000000010000000000000000000000020000000b0000000b0000000c0000000c0000000e000000100000000f0000000f00000011000000120000001300000014000000
   scaleVariance: 0.1
   spacing: 1
   pushForce: 0
@@ -197,6 +199,7 @@ MonoBehaviour:
   paired: 0
   walkFowards: 0
   physicMaterial: {fileID: 13400000, guid: 0c1a1f5daa514f3428941b8c6f27aa16, type: 2}
+  isGrounded: 0
 --- !u!54 &9025249630797761588
 Rigidbody:
   m_ObjectHideFlags: 0

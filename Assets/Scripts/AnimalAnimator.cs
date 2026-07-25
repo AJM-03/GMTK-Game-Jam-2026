@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static AnimalAnimator;
 
 
 public class AnimalAnimator : MonoBehaviour
@@ -71,7 +72,9 @@ public class AnimalAnimator : MonoBehaviour
 
     private void Update()
     {
-        if (GetComponent<Rigidbody>().velocity.magnitude > .5f)
+        if (!animal.isGrounded)
+            ChangeAnimation(animal.airAnimation);
+        else if (GetComponent<Rigidbody>().velocity.magnitude > .5f)
             ChangeAnimation(animal.walkingAnimation);
         else
             ChangeAnimation(animal.idleAnimation);
@@ -81,11 +84,14 @@ public class AnimalAnimator : MonoBehaviour
     public void ChangeAnimation(Anim a)
     {
 
+
+
         if (a == Anim.Spin)  // If Spin/Splash animation
         {
             if (animator.HasState(0, Animator.StringToHash("Spin")))
             {
                 StartCoroutine(PlayOneShot("Spin"));
+                ChangeShapekey(Emotion.Eyes_Spin);
             }
             else if (animator.HasState(0, Animator.StringToHash("Splash")))
             {
@@ -95,6 +101,7 @@ public class AnimalAnimator : MonoBehaviour
         else if (a == Anim.Clicked)
         {
             StartCoroutine(PlayOneShot(Anim.Clicked.ToString()));
+            ChangeShapekey(Emotion.Eyes_Happy);
         }
         else
         {
@@ -145,6 +152,9 @@ public class AnimalAnimator : MonoBehaviour
     {
         if (fadingTo == a) return;
         if (!animator.HasState(0, Animator.StringToHash(a))) return;
+
+        int emotion = Random.Range(0, animal.emotions.Count);
+        ChangeShapekey(animal.emotions[emotion]);
 
         fadeCo = StartCoroutine(FadeAnim(a));
     }
