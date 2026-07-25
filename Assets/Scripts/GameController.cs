@@ -48,8 +48,7 @@ public class GameController : MonoBehaviour
         HUDCanvas.alpha = 0f;
         ThunderCanvas.alpha = 0f;
         FadeCanvas.alpha = 1f;
-        mainMenuCanvas.alpha = 1f;
-        mainMenuCanvas.interactable = true;
+        mainMenuCanvas.GetComponent<MainMenu>().InitMenu();
         menuAnimal = SpawnAnimal();
         menuAnimal.transform.position = menuAnimalPosition.position;
         menuAnimal.transform.rotation = menuAnimalPosition.rotation;

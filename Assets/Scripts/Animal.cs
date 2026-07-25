@@ -77,7 +77,7 @@ public class Animal : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, 
                     }
                 }
             }
-            else Debug.Log("Too Close " + animalName);
+            //else Debug.Log("Too Close " + animalName);
 
                 //if (!CastMovement(-transform.up))
                 //{

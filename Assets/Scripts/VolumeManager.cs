@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ValumManager1 : MonoBehaviour
+public class VolumeManager : MonoBehaviour
 {
-    [SerializeField]
-    Slider volumeSlider;
+    [SerializeField] Slider volumeSlider;
+    public float defaultVolume = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
         if (!PlayerPrefs.HasKey("musicVolume"))
         {
-            PlayerPrefs.SetFloat("musicVolume", 1);
+            PlayerPrefs.SetFloat("musicVolume", defaultVolume);
             Load();
         }
         else
