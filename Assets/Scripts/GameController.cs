@@ -15,7 +15,9 @@ public class GameController : MonoBehaviour
     [SerializeField] ParticleSystem puffParticles;
     [SerializeField] ParticleSystem poofParticles;
     [SerializeField] List<AudioClip> poofSounds = new List<AudioClip>();
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource poofAudioSource;
+    [SerializeField] AudioSource pairAudioSource;
+
     public float timer;
     public float score;
 
@@ -75,8 +77,6 @@ public class GameController : MonoBehaviour
         a.GetComponent<AnimalAnimator>().ChangeAnimation(AnimalAnimator.Anim.Spin);
         poofParticles.transform.position = a.transform.position + new Vector3(0, 0.5f, 0);
         poofParticles.Play();
-        int randomIndex = UnityEngine.Random.Range(0, poofSounds.Count);
-        audioSource.PlayOneShot(poofSounds[randomIndex]);
 
         if (!selectedAnimal)
         {
@@ -88,6 +88,8 @@ public class GameController : MonoBehaviour
 
             selectedAnimal = a;
         }
+        int randomIndex = UnityEngine.Random.Range(0, poofSounds.Count);
+        poofAudioSource.PlayOneShot(poofSounds[randomIndex]);
     }
 
     public void MouseEnter(Animal a)
@@ -107,6 +109,7 @@ public class GameController : MonoBehaviour
         if (a.animalName == b.animalName && a != b)
         {
             score += 2;
+            pairAudioSource.Play();
             highlightedAnimal = null;
             selectedAnimal = null;
             StartCoroutine(MovePair(a, b));
